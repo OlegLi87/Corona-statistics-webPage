@@ -43,14 +43,18 @@
 <div class="data-container">
   <app-daily-statistics></app-daily-statistics>
 
-  <!-- <div class="spreadness-indices">
+  <div class="spreadness-indices">
     <div class="title">מדדי התפשטות בהסתכלות שבועית</div>
     <div class="spreadness-charts-container">
-      <app-plain-areaspline-chart
-        class="spreadness-chart"
-      ></app-plain-areaspline-chart>
-      <div class="spreadness-chart"></div>
-      <div class="spreadness-chart"></div>
+      <div class="spreadness-chart">
+        <app-identified-change-trend-chart></app-identified-change-trend-chart>
+      </div>
+      <div class="spreadness-chart">
+        <app-identified-outside-spreadness-chart></app-identified-outside-spreadness-chart>
+      </div>
+      <div class="spreadness-chart">
+        <app-serious-critical-sick-chart></app-serious-critical-sick-chart>
+      </div>
     </div>
-  </div> -->
+  </div>
 </div>

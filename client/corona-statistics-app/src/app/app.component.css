@@ -88,7 +88,7 @@ header {
 }
 
 .spreadness-indices {
-  height: 24.925rem;
+  height: 23.5rem;
   background-color: #ffffff;
   margin-top: 1.3rem;
   border-radius: 0.625rem;
@@ -111,10 +111,17 @@ header {
   flex: 1 1 33.33333%;
 }
 
-app-plain-areaspline-chart {
+.spreadness-chart:not(:last-of-type) {
   border-left: 1px solid #d8d8d9;
 }
 
-.spreadness-chart:not(:last-of-type) {
-  border-left: 1px solid #d8d8d9;
+app-identified-outside-spreadness-chart h6 {
+  font-size: 0.875rem;
+  margin: 0;
+  padding: 0.86rem 0.9375rem 0 0.9375rem;
+}
+.spreadness-chart h6 {
+  font-size: 0.875rem;
+  margin: 0;
+  padding: 0.86rem 0.9375rem 0 0.9375rem;
 }

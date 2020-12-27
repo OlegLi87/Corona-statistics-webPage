@@ -9,7 +9,9 @@ import { PercentageValuePipe } from './shared/pipes/percentageValue.pipe';
 import { PlusMinusSignPipe } from './shared/pipes/plusMinusSign.pipe';
 import { CommaPipe } from './shared/pipes/comma.pipe';
 import { AreasplineChartComponent } from './daily-statistics/areaspline-chart/areaspline-chart.component';
-import { PlainAreasplineChartComponent } from './spreadness indices components/plain-areaspline-chart/plain-areaspline-chart.component';
+import { IdentifiedChangeTrendChartComponent } from './spreadnessChartComponents/identified-change-trend-chart/identified-change-trend-chart.component';
+import { SeriousCriticalSickChartComponent } from './spreadnessChartComponents/serious-critical-sick-chart/serious-critical-sick-chart.component';
+import { IdentifiedOutsideSpreadnessChartComponent } from './spreadnessChartComponents/identified-outside-spreadness-chart/identified-outside-spreadness-chart.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { PlainAreasplineChartComponent } from './spreadness indices components/p
     CommaPipe,
     DailyStatisticsComponent,
     AreasplineChartComponent,
-    PlainAreasplineChartComponent,
+    IdentifiedChangeTrendChartComponent,
+    SeriousCriticalSickChartComponent,
+    IdentifiedOutsideSpreadnessChartComponent,
   ],
   imports: [BrowserModule, HttpClientModule],
   providers: [

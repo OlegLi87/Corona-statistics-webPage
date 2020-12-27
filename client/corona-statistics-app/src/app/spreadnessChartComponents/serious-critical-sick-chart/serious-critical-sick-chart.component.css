@@ -1,0 +1,10 @@
+h6 {
+  font-size: 0.875rem;
+  margin: 0;
+  padding: 0.86rem 0.9375rem 0 0.9375rem;
+}
+
+h6 span.underlined {
+  font-family: inherit;
+  text-decoration: underline;
+}
