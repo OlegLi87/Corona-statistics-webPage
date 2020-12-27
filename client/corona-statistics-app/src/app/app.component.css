@@ -1,0 +1,120 @@
+header {
+  background-color: #ffffff;
+  color: #24343f;
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  height: 4.75rem;
+  left: 0.46rem;
+  top: 0;
+  box-shadow: rgb(44, 51, 73, 0.1) 0 8px 16px 0;
+}
+
+.top-border {
+  height: 0.125rem;
+  background: linear-gradient(90deg, #4bb887, #16b6d0, #d6e58a);
+}
+
+.header-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  margin-right: 0.312rem;
+}
+
+.logo-container .toggle-button {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.37rem;
+  cursor: pointer;
+}
+
+.logo {
+  width: 15.75rem;
+  height: 3rem;
+  margin-right: 0.34rem;
+}
+
+.title-container {
+  width: 100%;
+  position: absolute;
+  text-align: center;
+}
+
+.title-container a {
+  color: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.title-container .subtitle {
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 0.1rem;
+}
+
+.left-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 6.875rem;
+  height: 1.75rem;
+  background-color: #39475d;
+  border-radius: 3.12rem;
+  font-size: 0.87rem;
+  font-weight: 400;
+  color: #ffffff;
+  position: absolute;
+  left: 7%;
+  cursor: pointer;
+}
+
+.header-placeHolder {
+  height: 4.75rem;
+}
+
+.data-container {
+  position: relative;
+  left: 0.28rem;
+  padding: 2.25rem;
+}
+
+.spreadness-indices {
+  height: 24.925rem;
+  background-color: #ffffff;
+  margin-top: 1.3rem;
+  border-radius: 0.625rem;
+  padding: 0 0.07rem;
+}
+
+.spreadness-indices .title {
+  font-size: 1.25rem;
+  padding: 1.625rem;
+  text-align: center;
+  border-bottom: 1px solid #d8d8d9;
+}
+
+.spreadness-charts-container {
+  display: flex;
+  height: calc(100% - 4.75rem);
+}
+
+.spreadness-chart {
+  flex: 1 1 33.33333%;
+}
+
+app-plain-areaspline-chart {
+  border-left: 1px solid #d8d8d9;
+}
+
+.spreadness-chart:not(:last-of-type) {
+  border-left: 1px solid #d8d8d9;
+}

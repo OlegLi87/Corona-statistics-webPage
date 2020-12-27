@@ -1,0 +1,325 @@
+<div class="container">
+  <div class="data">
+    <div class="title">
+      <h6>מאומתים חדשים אתמול</h6>
+      <div
+        class="info-icon"
+        #identifiedIcon
+        (mouseenter)="mouseEnter(identifiedIcon)"
+        (mouseleave)="mouseLeave()"
+      >
+        <span class="dot"></span>
+        <span class="bar"></span>
+      </div>
+      <div
+        class="info-text-container"
+        *ngIf="activeInfoIcon === identifiedIcon"
+      >
+        <span>סך הנדבקים בנגיף COVID-19 בישראל שאותרו </span>
+        <br />
+        <span style="display: block; margin-bottom: 0.65rem"
+          >משעה 00:00 עד שעה 23:59 של יום אתמול</span
+        >
+        <span>מאומת-כל מי שנדבק ונמצא חיובי לנגיף </span>
+        <br />
+        <span>COVID-19,בין אם הופיעו אצלו תסמינים ובין </span>
+        <br />
+        <span>ובין אם לא,בין אם הוא חולה,החלים או נפטר </span>
+      </div>
+    </div>
+    <div class="stat-data-container" *ngIf="dailyStatistics">
+      <h5>
+        {{ dailyStatistics.identified | comma }}
+      </h5>
+      <p class="data-midnight">
+        {{ dailyStatistics.identifiedFromMidnight | comma }}
+        <span class="plusMinusSign">{{
+          dailyStatistics.identifiedFromMidnight | plusMinusSign
+        }}</span>
+        <span>מחצות</span>
+      </p>
+      <p class="overall-stat">
+        {{ dailyStatistics.identifiedOverall | comma }}
+        <span>סה"כ</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="data">
+    <div class="title">
+      <h6>חולים פעילים</h6>
+      <div
+        class="info-icon"
+        #sickActiveIcon
+        (mouseenter)="mouseEnter(sickActiveIcon)"
+        (mouseleave)="mouseLeave()"
+      >
+        <span class="dot"></span>
+        <span class="bar"></span>
+      </div>
+      <div
+        id="secondIcon"
+        class="info-text-container"
+        *ngIf="activeInfoIcon === sickActiveIcon"
+      >
+        <span>סך הנדבקים בנגיף COVID-19 בישראל שאותרו </span>
+        <br />
+        <span style="display: block; margin-bottom: 0.65rem"
+          >משעה 00:00 עד שעה 23:59 של יום אתמול</span
+        >
+        <span>מאומת-כל מי שנדבק ונמצא חיובי לנגיף </span>
+        <br />
+        <span>COVID-19,בין אם הופיעו אצלו תסמינים ובין </span>
+        <br />
+        <span>ובין אם לא,בין אם הוא חולה,החלים או נפטר </span>
+      </div>
+    </div>
+    <div class="stat-data-container" *ngIf="dailyStatistics">
+      <h5>
+        {{ dailyStatistics.sickActive | comma }}
+      </h5>
+      <p class="data-midnight">
+        {{ dailyStatistics.sickActiveFromMidnight | comma }}
+        <span class="plusMinusSign">{{
+          dailyStatistics.sickActiveFromMidnight | plusMinusSign
+        }}</span>
+        <span>מחצות</span>
+      </p>
+      <div class="additional-data">
+        <div class="info">
+          <div class="info-key"><span>בית / קהילה</span></div>
+          <div class="info-value">
+            {{ dailyStatistics.sickActiveAtHome | comma }}
+          </div>
+        </div>
+        <div class="info">
+          <div class="info-key"><span>מלון</span></div>
+          <div class="info-value">
+            {{ dailyStatistics.sickActiveAtHotel | comma }}
+          </div>
+        </div>
+        <div class="info">
+          <div class="info-key"><span>בי"ח</span></div>
+          <div class="info-value">
+            {{ dailyStatistics.sickActiveAtHospital | comma }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="data">
+    <div class="title">
+      <h6>חולים קשה</h6>
+      <div
+        class="info-icon"
+        #sickSeriouslyIcon
+        (mouseenter)="mouseEnter(sickSeriouslyIcon)"
+        (mouseleave)="mouseLeave()"
+      >
+        <span class="dot"></span>
+        <span class="bar"></span>
+      </div>
+      <div
+        id="thirdIcon"
+        class="info-text-container"
+        *ngIf="activeInfoIcon === sickSeriouslyIcon"
+      >
+        <span>סך הנדבקים בנגיף COVID-19 בישראל שאותרו </span>
+        <br />
+        <span style="display: block; margin-bottom: 0.65rem"
+          >משעה 00:00 עד שעה 23:59 של יום אתמול</span
+        >
+        <span>מאומת-כל מי שנדבק ונמצא חיובי לנגיף </span>
+        <br />
+        <span>COVID-19,בין אם הופיעו אצלו תסמינים ובין </span>
+        <br />
+        <span>ובין אם לא,בין אם הוא חולה,החלים או נפטר </span>
+      </div>
+    </div>
+    <div class="stat-data-container" *ngIf="dailyStatistics">
+      <h5>
+        {{ dailyStatistics.sickSerious | comma }}
+      </h5>
+      <p class="data-midnight">
+        {{ dailyStatistics.sickSeriousFromMidnight | comma }}
+        <span class="plusMinusSign">
+          {{ dailyStatistics.sickSeriousFromMidnight | plusMinusSign }}</span
+        >
+        <span>מחצות</span>
+      </p>
+      <div class="additional-data sick">
+        <div class="info">
+          <div class="dot critical"></div>
+          <div class="info-key"><span>מתוכם קריטי</span></div>
+          <div class="info-value">
+            {{ dailyStatistics.sickCritical | comma }}
+          </div>
+        </div>
+        <div class="info">
+          <div class="dot moderate"></div>
+          <div class="info-key"><span>בינוני</span></div>
+          <div class="info-value">
+            {{ dailyStatistics.sickModerate | comma }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="data" style="position: relative">
+    <div class="title">
+      <h6>מונשמים</h6>
+      <div
+        class="info-icon"
+        #respiratoryIcon
+        (mouseenter)="mouseEnter(respiratoryIcon)"
+        (mouseleave)="mouseLeave()"
+      >
+        <span class="dot"></span>
+        <span class="bar"></span>
+      </div>
+      <div
+        id="fourthIcon"
+        class="info-text-container"
+        *ngIf="activeInfoIcon === respiratoryIcon"
+      >
+        <span>סך הנדבקים בנגיף COVID-19 בישראל שאותרו </span>
+        <br />
+        <span style="display: block; margin-bottom: 0.65rem"
+          >משעה 00:00 עד שעה 23:59 של יום אתמול</span
+        >
+        <span>מאומת-כל מי שנדבק ונמצא חיובי לנגיף </span>
+        <br />
+        <span>COVID-19,בין אם הופיעו אצלו תסמינים ובין </span>
+        <br />
+        <span>ובין אם לא,בין אם הוא חולה,החלים או נפטר </span>
+      </div>
+    </div>
+    <div class="stat-data-container" *ngIf="dailyStatistics">
+      <h5>{{ dailyStatistics.respiratory | comma }}</h5>
+      <p class="data-midnight">
+        {{ dailyStatistics.respiratoryFromMidnight | comma }}
+        <span class="plusMinusSign">{{
+          dailyStatistics.respiratoryFromMidnight | plusMinusSign
+        }}</span>
+        <span>מחצות</span>
+      </p>
+    </div>
+    <button
+      class="toggle-chart"
+      #buttonRespiratory
+      (click)="buttonClicked(buttonRespiratory, $event)"
+    >
+      <div class="bars-icon first"></div>
+      <span>מגמת שינוי יומית</span>
+    </button>
+    <app-areaspline-chart
+      class="chart"
+      *ngIf="activeButton === buttonRespiratory"
+      [statisticsDataType]="getStatisticsDataType('respiratory')"
+    ></app-areaspline-chart>
+  </div>
+
+  <div class="data lower" style="position: relative">
+    <div class="title">
+      <h6>נפטרים מצטבר</h6>
+      <div
+        class="info-icon"
+        #deathsIcon
+        (mouseenter)="mouseEnter(deathsIcon)"
+        (mouseleave)="mouseLeave()"
+      >
+        <span class="dot"></span>
+        <span class="bar"></span>
+      </div>
+      <div
+        id="fifthIcon"
+        class="info-text-container"
+        *ngIf="activeInfoIcon === deathsIcon"
+      >
+        <span>סך הנדבקים בנגיף COVID-19 בישראל שאותרו </span>
+        <br />
+        <span style="display: block; margin-bottom: 0.65rem"
+          >משעה 00:00 עד שעה 23:59 של יום אתמול</span
+        >
+        <span>מאומת-כל מי שנדבק ונמצא חיובי לנגיף </span>
+        <br />
+        <span>COVID-19,בין אם הופיעו אצלו תסמינים ובין </span>
+        <br />
+        <span>ובין אם לא,בין אם הוא חולה,החלים או נפטר </span>
+      </div>
+    </div>
+    <div class="stat-data-container" *ngIf="dailyStatistics">
+      <h5>
+        {{ dailyStatistics.deathsOverall | comma }}
+      </h5>
+    </div>
+    <button
+      class="toggle-chart"
+      #buttonDeaths
+      (click)="buttonClicked(buttonDeaths, $event)"
+    >
+      <div class="bars-icon second" #iconSecond></div>
+      <span>מגמת שינוי יומית</span>
+    </button>
+    <app-areaspline-chart
+      class="chart"
+      *ngIf="activeButton === buttonDeaths"
+      [statisticsDataType]="getStatisticsDataType('deaths')"
+    ></app-areaspline-chart>
+  </div>
+
+  <div class="data lower" style="position: relative">
+    <div class="title">
+      <h6>אחוז בדיקות חיוביות אתמול</h6>
+      <div
+        class="info-icon"
+        #testsIcon
+        (mouseenter)="mouseEnter(testsIcon)"
+        (mouseleave)="mouseLeave()"
+      >
+        <span class="dot"></span>
+        <span class="bar"></span>
+      </div>
+      <div
+        id="sixthIcon"
+        class="info-text-container"
+        *ngIf="activeInfoIcon === testsIcon"
+      >
+        <span>סך הנדבקים בנגיף COVID-19 בישראל שאותרו </span>
+        <br />
+        <span style="display: block; margin-bottom: 0.65rem"
+          >משעה 00:00 עד שעה 23:59 של יום אתמול</span
+        >
+        <span>מאומת-כל מי שנדבק ונמצא חיובי לנגיף </span>
+        <br />
+        <span>COVID-19,בין אם הופיעו אצלו תסמינים ובין </span>
+        <br />
+        <span>ובין אם לא,בין אם הוא חולה,החלים או נפטר </span>
+      </div>
+    </div>
+    <div class="stat-data-container" *ngIf="dailyStatistics">
+      <h5>
+        {{ dailyStatistics | percentageValue }}
+      </h5>
+      <p class="overall-stat">
+        {{ dailyStatistics.tests | comma }}
+        <span>בדיקות אתמול</span>
+      </p>
+    </div>
+    <button
+      class="toggle-chart"
+      #buttonTests
+      (click)="buttonClicked(buttonTests, $event)"
+    >
+      <div class="bars-icon third" #iconThird></div>
+      <span>בדיקות יומיות</span>
+    </button>
+    <app-areaspline-chart
+      class="chart"
+      *ngIf="activeButton === buttonTests"
+      [statisticsDataType]="getStatisticsDataType('tests')"
+    ></app-areaspline-chart>
+  </div>
+</div>

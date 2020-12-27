@@ -1,0 +1,40 @@
+@font-face {
+  font-family: OpenSansHebrew;
+  src: url("./assets/fonts/open-sans-hebrew/OpenSansHebrew-Bold.ttf");
+}
+
+@font-face {
+  font-family: OpenSansHebrewLight;
+  src: url("./assets/fonts/open-sans-hebrew/OpenSansHebrew-Light.ttf");
+}
+
+@font-face {
+  font-family: OpenSansHebrewRegular;
+  src: url("./assets/fonts/open-sans-hebrew/OpenSansHebrew-Regular.ttf");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  direction: rtl;
+  overflow: scroll;
+  overflow-x: hidden;
+  line-height: 1.15;
+  font-family: OpenSansHebrew;
+}
+
+body {
+  background-color: #edf1f7;
+  margin: 0;
+  color: #222b45;
+}
+
+span {
+  font-family: OpenSansHebrewRegular;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}

@@ -1,0 +1,7 @@
+export enum StatisticsDataType {
+  LatestUpdateTime,
+  DailyStatistics,
+  RespiratoryOverall,
+  DeathsOverall,
+  TestsOverall,
+}
