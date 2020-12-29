@@ -38,3 +38,51 @@ span {
 ::-webkit-scrollbar {
   width: 0;
 }
+
+/* rules targeting spreadness indices components which share the same style (avoiding view encapsulation) */
+.spreadness-indices .spreadness-chart .main-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.spreadness-indices .spreadness-chart h6 {
+  font-size: 0.875rem;
+  margin: 0 0 0.3rem 0;
+  padding: 0.86rem 0.9375rem 0 0.9375rem;
+}
+
+.spreadness-indices .spreadness-chart .info-container {
+  width: fit-content;
+  height: 1.525rem;
+  background-color: #e6f1f4;
+  margin: 0 0.625rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.spreadness-indices .spreadness-chart .info-container span {
+  font-size: 0.7rem;
+  margin-left: 0.625rem;
+}
+
+.spreadness-indices .spreadness-chart .info-icon {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  background-color: #14212b;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.7rem;
+  text-align: center;
+  margin: 0 0.3125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spreadness-indices .spreadness-chart .chart-container {
+  flex: 1 0 auto;
+  background-color: grey;
+}

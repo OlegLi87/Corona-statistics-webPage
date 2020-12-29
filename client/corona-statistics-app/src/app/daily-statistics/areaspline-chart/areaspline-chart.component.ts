@@ -67,14 +67,14 @@ export class AreasplineChartComponent implements OnInit {
   }
 
   private drawChart(): void {
-    let chartData = this.getChartDataObject();
+    let chartData = this.createChartDataObject();
     Highcharts.chart(
       this.chartContainerID,
       getCrosshairAreasplineConfigObject(chartData)
     );
   }
 
-  private getChartDataObject(): AreasplineChartData {
+  private createChartDataObject(): AreasplineChartData {
     const xAxisTitle = 'תאריך';
     let tooltipTitle: string;
     let yAxisTitle: string;

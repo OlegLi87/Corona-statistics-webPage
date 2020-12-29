@@ -114,14 +114,3 @@ header {
 .spreadness-chart:not(:last-of-type) {
   border-left: 1px solid #d8d8d9;
 }
-
-app-identified-outside-spreadness-chart h6 {
-  font-size: 0.875rem;
-  margin: 0;
-  padding: 0.86rem 0.9375rem 0 0.9375rem;
-}
-.spreadness-chart h6 {
-  font-size: 0.875rem;
-  margin: 0;
-  padding: 0.86rem 0.9375rem 0 0.9375rem;
-}

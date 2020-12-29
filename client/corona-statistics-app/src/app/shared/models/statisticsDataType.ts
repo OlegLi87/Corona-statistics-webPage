@@ -4,4 +4,7 @@ export enum StatisticsDataType {
   RespiratoryOverall,
   DeathsOverall,
   TestsOverall,
+  IdentifiedChangeTrend,
+  SickSerious,
+  IdentifiedOutsideSpreadness,
 }

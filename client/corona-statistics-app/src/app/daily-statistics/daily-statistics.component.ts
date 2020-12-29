@@ -5,10 +5,8 @@ import {
   ElementRef,
   HostListener,
   OnInit,
-  Output,
   QueryList,
   ViewChildren,
-  EventEmitter,
 } from '@angular/core';
 import { ConnectionService } from '../shared/services/connection.service';
 import { StatisticsService } from '../shared/services/statistics.service';
@@ -43,7 +41,7 @@ export class DailyStatisticsComponent implements OnInit, AfterViewInit {
   private svgDraws = new Array<any>();
   private connectionConfig: ConnectionConfig = {
     statisticsDataType: StatisticsDataType.DailyStatistics,
-    projectionQuery: 'recovered=0',
+    projectionQuery: 'recovered=0&identifiedOutsideSpreadness=0',
     limit: 1,
   };
 
@@ -55,7 +53,7 @@ export class DailyStatisticsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.statisticsService.dailyStatisticsUpdated.subscribe(
+    this.statisticsService.dailyStatisticsDataUpdated.subscribe(
       (data) => (this.dailyStatistics = data)
     );
 

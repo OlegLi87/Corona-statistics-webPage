@@ -1,3 +1,6 @@
+import { IdentifiedOutsideSpreadness } from './../models/statisticsDataModels/identifiedOutsideSpreadness.model';
+import { SickSerious } from './../models/statisticsDataModels/sickSerious.model';
+import { IdentifiedChangeTrend } from './../models/statisticsDataModels/identifiedChangeTrend.model';
 import { DailyChangeTrendData } from './../models/statisticsDataModels/dailyChangeTrendData.model';
 import { DailyStatistics } from './../models/statisticsDataModels/dailyStatistics.model';
 import { LatestUpdateTime } from '../models/statisticsDataModels/latestUpdateTime.model';
@@ -7,29 +10,40 @@ import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class StatisticsService {
-  private latestUpdateTime: LatestUpdateTime;
-  private dailyStatistics: DailyStatistics;
-  private dailyChangeTrendData = new Array<DailyChangeTrendData>();
+  private latestUpdateTimeData: LatestUpdateTime;
+  private dailyStatisticsData: DailyStatistics;
+  private dailyChangeTrendData: Array<DailyChangeTrendData>;
+  private identifiedChangeTrendData: Array<IdentifiedChangeTrend>;
+  private sickSeriousData: Array<SickSerious>;
+  private identifiedOutsideSpreadnessData: Array<IdentifiedOutsideSpreadness>;
 
-  latestUpdateTimeUpdated = new Subject<LatestUpdateTime>();
-  dailyStatisticsUpdated = new Subject<DailyStatistics>();
+  latestUpdateTimeDataUpdated = new Subject<LatestUpdateTime>();
+  dailyStatisticsDataUpdated = new Subject<DailyStatistics>();
   dailyChangeTrendDataUpdated = new Subject<Array<DailyChangeTrendData>>();
+  identifiedChangeTrendDataUpdated = new Subject<
+    Array<IdentifiedChangeTrend>
+  >();
+  sickSeriousDataUpdated = new Subject<Array<SickSerious>>();
+  identifiedOutsideSpreadnessDataUpdated = new Subject<
+    Array<IdentifiedOutsideSpreadness>
+  >();
 
   updateStatisticsData(data: any, statisticsDataType: StatisticsDataType) {
     switch (statisticsDataType) {
       case StatisticsDataType.LatestUpdateTime: {
-        this.latestUpdateTime = data[0];
-        this.latestUpdateTimeUpdated.next(this.latestUpdateTime);
+        this.latestUpdateTimeData = data[0];
+        this.latestUpdateTimeDataUpdated.next(this.latestUpdateTimeData);
         break;
       }
       case StatisticsDataType.DailyStatistics: {
-        this.dailyStatistics = data[0];
-        this.dailyStatisticsUpdated.next(this.dailyStatistics);
+        this.dailyStatisticsData = data[0];
+        this.dailyStatisticsDataUpdated.next(this.dailyStatisticsData);
         break;
       }
       case StatisticsDataType.RespiratoryOverall:
       case StatisticsDataType.DeathsOverall:
       case StatisticsDataType.TestsOverall: {
+        this.dailyChangeTrendData = new Array<DailyChangeTrendData>();
         data.forEach((el) => {
           let obj = { date: null, amount: null };
           for (const prop in el) {
@@ -40,7 +54,25 @@ export class StatisticsService {
           this.dailyChangeTrendData.push(obj);
         });
         this.dailyChangeTrendDataUpdated.next(this.dailyChangeTrendData);
-        this.dailyChangeTrendData = new Array<DailyChangeTrendData>();
+        break;
+      }
+      case StatisticsDataType.IdentifiedChangeTrend: {
+        this.identifiedChangeTrendData = data;
+        this.identifiedChangeTrendDataUpdated.next(
+          this.identifiedChangeTrendData
+        );
+        break;
+      }
+      case StatisticsDataType.SickSerious: {
+        this.sickSeriousData = data;
+        this.sickSeriousDataUpdated.next(this.sickSeriousData);
+        break;
+      }
+      case StatisticsDataType.IdentifiedOutsideSpreadness: {
+        this.identifiedOutsideSpreadnessData = data;
+        this.identifiedOutsideSpreadnessDataUpdated.next(
+          this.identifiedOutsideSpreadnessData
+        );
         break;
       }
     }
