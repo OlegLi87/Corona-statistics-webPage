@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { getSickSeriousAreasplineConfigObject } from 'src/app/shared/highChart configuration object factories/sickSeriousAreasplineConfig';
+import { getSickSeriousAreasplineConfigObject } from 'src/app/shared/highChart configuration object factories/sickSeriousAreasplineConfigFactory';
 import { AreasplineChartData } from 'src/app/shared/models/areasplineChartData.model';
 import { ConnectionConfig } from 'src/app/shared/models/connectionConfig.model';
 import { SickSerious } from 'src/app/shared/models/statisticsDataModels/sickSerious.model';
@@ -20,9 +20,8 @@ export class SeriousCriticalSickChartComponent implements OnInit {
     projectionQuery: 'date=1&sickSerious=1',
     limit: 7,
   };
-  private sickSeriousData: Array<SickSerious>;
 
-  containerId = 'seriousCriticalSickChart';
+  chartContainerId = 'seriousCriticalSickChart';
 
   constructor(
     private statisticsService: StatisticsService,
@@ -31,34 +30,32 @@ export class SeriousCriticalSickChartComponent implements OnInit {
 
   ngOnInit(): void {
     this.statisticsService.sickSeriousDataUpdated.subscribe((data) => {
-      this.sickSeriousData = data;
-      this.drawChart();
+      this.drawChart(data);
     });
     this.connectionService.fetchStatisticsData(this.connectionConfig);
   }
 
-  private drawChart(): void {
-    const chartData = this.createChartDataObject();
+  private drawChart(data: Array<SickSerious>): void {
+    const chartData = this.createChartDataObject(data);
     Highcharts.chart(
-      this.containerId,
+      this.chartContainerId,
       getSickSeriousAreasplineConfigObject(chartData)
     );
   }
 
-  private createChartDataObject(): AreasplineChartData {
+  private createChartDataObject(data: Array<SickSerious>): AreasplineChartData {
     const xAxisTitle = null;
     const yAxisTitle = null;
     const tooltipTitle = null;
     let xAxisCategories = new Array<string>();
-    let yAxisData = new Array<number>();
+    let yAxisData = new Array<Array<number>>();
+    yAxisData[0] = new Array<number>();
 
-    for (let i = this.sickSeriousData.length - 1; i > -1; i--) {
+    for (let i = data.length - 1; i > -1; i--) {
       xAxisCategories.push(
-        `${this.sickSeriousData[i].date.getDate()}.${
-          this.sickSeriousData[i].date.getMonth() + 1
-        }`
+        `${data[i].date.getDate()}.${data[i].date.getMonth() + 1}`
       );
-      yAxisData.push(this.sickSeriousData[i].sickSerious);
+      yAxisData[0].push(data[i].sickSerious);
     }
 
     return {

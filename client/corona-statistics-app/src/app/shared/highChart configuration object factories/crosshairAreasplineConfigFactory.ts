@@ -22,7 +22,7 @@ export function getCrosshairAreasplineConfigObject(
     },
     series: [
       {
-        data: chartData.yAxisData,
+        data: chartData.yAxisData[0],
         color: '#66d2fd',
         lineWidth: 1,
         states: {
@@ -66,7 +66,7 @@ export function getCrosshairAreasplineConfigObject(
       left: 45,
       categories: chartData.xAxisCategories,
       title: {
-        text: chartData.xAxisTitle,
+        text: chartData.xAxisTitle ?? '',
         style: {
           fontSize: '0.9rem',
           fontWeight: 400,
@@ -89,7 +89,7 @@ export function getCrosshairAreasplineConfigObject(
     },
     yAxis: {
       title: {
-        text: chartData.yAxisTitle,
+        text: chartData.yAxisTitle ?? '',
         margin: 19,
         style: {
           fontSize: '0.75rem',

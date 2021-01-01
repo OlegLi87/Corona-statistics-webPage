@@ -1,4 +1,4 @@
-import { AreasplineChartData } from './../models/areasplineChartData.model';
+import { AreasplineChartData } from '../models/areasplineChartData.model';
 
 export function getSickSeriousAreasplineConfigObject(
   chartData: AreasplineChartData
@@ -10,8 +10,8 @@ export function getSickSeriousAreasplineConfigObject(
         fontFamily: 'OpenSansHebrewLight',
         fontWeight: 900,
       },
-      spacingBottom: 25,
-      spacingTop: -10,
+      spacingBottom: 30,
+      spacingTop: 20,
       spacingRight: 30,
       spacingLeft: 35,
     },
@@ -19,13 +19,16 @@ export function getSickSeriousAreasplineConfigObject(
       text: '',
     },
     xAxis: {
+      title: {
+        text: chartData.xAxisTitle ?? '',
+      },
       categories: chartData.xAxisCategories,
       lineWidth: 0,
       left: 60,
     },
     yAxis: {
       title: {
-        text: '',
+        text: chartData.yAxisTitle ?? '',
       },
       gridLineWidth: 0,
     },
@@ -66,9 +69,10 @@ export function getSickSeriousAreasplineConfigObject(
     series: [
       {
         name: '',
-        data: chartData.yAxisData,
+        data: chartData.yAxisData[0],
         color: 'rgba(43,133,134,0.9)',
         lineWidth: 1,
+        cursor: 'pointer',
         states: {
           hover: {
             enabled: false,
@@ -81,6 +85,11 @@ export function getSickSeriousAreasplineConfigObject(
             fontSize: '12px',
           },
           y: -4,
+          crop: false,
+          overflow: true,
+        },
+        marker: {
+          cursor: 'pointer',
         },
       },
     ],

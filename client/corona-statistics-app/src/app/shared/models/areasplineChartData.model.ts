@@ -3,5 +3,5 @@ export interface AreasplineChartData {
   tooltipTitle: string;
   xAxisCategories: Array<string>;
   yAxisTitle: string;
-  yAxisData: Array<number>;
+  yAxisData: Array<Array<number>>;
 }

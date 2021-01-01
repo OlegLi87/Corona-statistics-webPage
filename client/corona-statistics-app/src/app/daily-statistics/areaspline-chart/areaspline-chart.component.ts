@@ -78,7 +78,8 @@ export class AreasplineChartComponent implements OnInit {
     const xAxisTitle = 'תאריך';
     let tooltipTitle: string;
     let yAxisTitle: string;
-    let yAxisData = new Array<number>();
+    let yAxisData = new Array<Array<number>>();
+    yAxisData[0] = new Array<number>();
     const xAxisCategories = new Array<string>();
 
     // reversing elements order since API sends data in descending date based order.
@@ -87,7 +88,7 @@ export class AreasplineChartComponent implements OnInit {
       xAxisCategories.push(
         data.date.getDate() + '.' + (data.date.getMonth() + 1)
       );
-      yAxisData.push(data.amount);
+      yAxisData[0].push(data.amount);
     }
 
     switch (this.statisticsDataType) {
