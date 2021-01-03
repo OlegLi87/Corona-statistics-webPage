@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { StatisticsService } from './statistics.service';
 import { map } from 'rxjs/operators';
 import { ConnectionConfig } from '../models/connectionConfig.model';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ConnectionService {
@@ -29,11 +30,20 @@ export class ConnectionService {
       );
   }
 
+  fetchFieldSum(fieldName: string): Observable<{ overallSum: number }> {
+    const connectionString = this.buildConnectionStringForFieldSum(fieldName);
+    return this.http.get<{ overallSum: number }>(connectionString);
+  }
+
   private buildConnectionString(
     projectionQuery: string,
     limit: number
   ): string {
     return `${this.connectionString}/dailyStatistics?${projectionQuery}&limit=${limit}`;
+  }
+
+  private buildConnectionStringForFieldSum(fieldName: string): string {
+    return `${this.connectionString}/dailyStatistics/fieldSum?field=${fieldName}`;
   }
 
   private modifyResponseData(data: Array<any>): Array<any> {

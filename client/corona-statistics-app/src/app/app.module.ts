@@ -12,6 +12,8 @@ import { AreasplineChartComponent } from './daily-statistics/areaspline-chart/ar
 import { IdentifiedChangeTrendChartComponent } from './spreadnessChartComponents/identified-change-trend-chart/identified-change-trend-chart.component';
 import { SeriousCriticalSickChartComponent } from './spreadnessChartComponents/serious-critical-sick-chart/serious-critical-sick-chart.component';
 import { IdentifiedOutsideSpreadnessChartComponent } from './spreadnessChartComponents/identified-outside-spreadness-chart/identified-outside-spreadness-chart.component';
+import { EpidemicalCurveComponent } from './thirdRowComponents/epidemical-curve/epidemical-curve.component';
+import { RespiratorySickSeriousComponent } from './thirdRowComponents/respiratory-sick-serious/respiratory-sick-serious.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { IdentifiedOutsideSpreadnessChartComponent } from './spreadnessChartComp
     IdentifiedChangeTrendChartComponent,
     SeriousCriticalSickChartComponent,
     IdentifiedOutsideSpreadnessChartComponent,
+    EpidemicalCurveComponent,
+    RespiratorySickSeriousComponent,
   ],
   imports: [BrowserModule, HttpClientModule],
   providers: [

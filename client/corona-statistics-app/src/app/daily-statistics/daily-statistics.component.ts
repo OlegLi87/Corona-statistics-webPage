@@ -64,8 +64,8 @@ export class DailyStatisticsComponent implements OnInit, AfterViewInit {
     this.createSvgGraphics();
   }
 
-  buttonClicked(buttonElement: HTMLButtonElement, e: MouseEvent): void {
-    e.stopPropagation();
+  buttonClicked(buttonElement: HTMLButtonElement, event: MouseEvent): void {
+    event.stopPropagation();
     if (this.activeButton === buttonElement) this.activeButton = null;
     else this.activeButton = buttonElement;
 

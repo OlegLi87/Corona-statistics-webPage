@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const utilFuncs = require('./utilFunctions');
 const dailyStatisticsModel = require('../models/dailyStatistics');
 
-// can fetch all documents or a specific one based on provided query params
 const fetchDailyStatistics = async (req, res) => {
   try {
     const limit = Number(req.query.limit);
@@ -25,4 +24,29 @@ const fetchDailyStatisticsByID = async (req, res) => {
   }
 };
 
-module.exports = { fetchDailyStatistics, fetchDailyStatisticsByID };
+const fetchFieldSum = async (req, res) => {
+  try {
+    const fieldName = req.query.field ?? 'wakamakafooooo'; // dummy optional string for avoid sending $ sign alone
+    const data = await dailyStatisticsModel.aggregate([
+      {
+        $group: {
+          _id: null,
+          overallSum: {
+            $sum: '$' + fieldName,
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+        },
+      },
+    ]);
+
+    utilFuncs.sendJsonResponse(res, data[0]);
+  } catch (error) {
+    utilFuncs.errorHandler(res, error);
+  }
+};
+
+module.exports = { fetchDailyStatistics, fetchDailyStatisticsByID, fetchFieldSum };

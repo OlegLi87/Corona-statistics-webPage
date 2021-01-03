@@ -133,7 +133,7 @@ export function getCrosshairAreasplineConfigObject(
       split: true,
       headerFormat:
         '<p style="font-size:11px;font-weight:400;color:#666666">{point.x}</p>',
-      pointFormat: `<p style="font-size:14px;text-align:center">{point.y}</p> <br> <span style="font-size:14px;top:100px">  ${chartData.tooltipTitle}</span>`,
+      pointFormat: `<p style="font-size:14px;text-align:center">{point.y}</p> <br> <span style="font-size:14px;top:100px">  ${chartData.tooltipTitle[0]}</span>`,
       footerFormat: 'footer',
     },
   };

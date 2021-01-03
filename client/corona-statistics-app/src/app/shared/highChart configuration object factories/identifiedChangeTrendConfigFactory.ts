@@ -77,8 +77,7 @@ export function getIdentifiedChangeTrendAreasplineConfigObject(
         name: '',
         data: chartData.yAxisData[1],
         color: 'rgba(82,203,253,0.9)',
-        lineWidth: 2,
-        linkedTo: 'foo',
+        lineWidth: 2.3,
         cursor: 'pointer',
         states: {
           hover: {
@@ -87,7 +86,7 @@ export function getIdentifiedChangeTrendAreasplineConfigObject(
         },
         dataLabels: {
           formatter(this, options) {
-            return `<span style="font-weight:900;color:#30364b">${
+            return `<span style="font-size:0.8rem;font-weight:900;color:#30364b;position:relative;top:4px">${
               this.y
             }%</span> <br> (${chartData.yAxisData[0][counter++]})`;
           },

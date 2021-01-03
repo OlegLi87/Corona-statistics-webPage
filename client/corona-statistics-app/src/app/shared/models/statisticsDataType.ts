@@ -7,4 +7,5 @@ export enum StatisticsDataType {
   IdentifiedChangeTrend,
   SickSerious,
   IdentifiedOutsideSpreadness,
+  RespiratoryAndSickSerious,
 }

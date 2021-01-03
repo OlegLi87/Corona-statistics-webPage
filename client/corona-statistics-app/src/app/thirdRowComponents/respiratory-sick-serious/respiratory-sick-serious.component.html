@@ -1,0 +1,44 @@
+<div class="mainContainer">
+  <div class="header">
+    <div class="upperRow">
+      <div class="title">חולים קשה ומונשמים</div>
+      <div class="dropDown" (click)="toggleShowDropDownList($event)">
+        {{ dropDownButtonText }}
+        <div class="arrow respiratory"></div>
+      </div>
+      <ul class="dropDown-list" *ngIf="showDropDownList">
+        <li
+          *ngFor="let item of dropDownListItems"
+          [class.selected]="item.selected"
+          (click)="
+            changeSelectedItem(item.textValue); toggleShowDropDownList($event)
+          "
+        >
+          {{ item.textValue }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="infoRow">
+      <div class="lightBulb"></div>
+      <span>
+        סה"כ <strong>{{ overSickSerious }}</strong> חולים קשה ו-
+        <strong>{{ overallRespiratory }}</strong> מונשמים
+        <strong> מאז תחילת המשבר (מרץ 2020)</strong>
+      </span>
+    </div>
+
+    <div class="legendsRow">
+      <div class="legend right">
+        <div class="circle"></div>
+        <span>חולים קשים</span>
+      </div>
+      <div class="legend left">
+        <div class="circle"></div>
+        <span>מונשמים</span>
+      </div>
+    </div>
+  </div>
+
+  <div [id]="chartContainerId" class="chartContainer"></div>
+</div>

@@ -84,4 +84,137 @@ span {
 
 .spreadness-indices .spreadness-chart .chart-container {
   flex: 1 0 auto;
+  border-radius: 10px;
+}
+
+.inRow-container .mainContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.inRow-container .header {
+  padding: 1rem 1.5rem;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.inRow-container .upperRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 00.9375rem;
+}
+
+.inRow-container .title {
+  color: #222b45;
+  font-size: 0.9375rem;
+  padding-top: 0.5rem;
+}
+
+.inRow-container .dropDown {
+  position: relative;
+  width: 9.062rem;
+  height: 2rem;
+  background-color: rgb(247, 249, 252);
+  border: 1px solid rgb(228, 233, 242);
+  border-radius: 24px;
+  padding: 0.49rem 1rem 0.187rem 2rem;
+  font-size: 0.793rem;
+  cursor: pointer;
+}
+
+.inRow-container .dropDown .arrow {
+  position: absolute;
+  width: 1.18rem;
+  height: 1.18rem;
+  top: 0.35rem;
+  left: 0.25rem;
+}
+
+.inRow-container .dropDown:hover {
+  background-color: #edf1f7;
+}
+
+.inRow-container .dropDown-list {
+  position: absolute;
+  z-index: 10;
+  top: 3.57rem;
+  left: 1.5rem;
+  list-style-type: none;
+  font-size: 0.8125rem;
+  background-color: #ffff;
+  border: 1px solid #d6d8db;
+  border-radius: 5px;
+  padding: 0;
+  margin: 0;
+}
+
+.inRow-container .dropDown-list li {
+  padding: 0.48rem 1rem 0.48rem 2rem;
+  cursor: pointer;
+}
+
+.inRow-container .dropDown-list li:hover {
+  background-color: #edeff3;
+}
+
+.inRow-container .dropDown-list li.selected {
+  background-color: #3366ff;
+  color: #f9faff;
+}
+
+.inRow-container .infoRow {
+  display: flex;
+  align-items: center;
+  background-color: #e6f1f4;
+  border-radius: 2px;
+  font-size: 0.7rem;
+  padding: 0 0.5rem;
+  margin: 0.625rem 0.562rem;
+  width: fit-content;
+  height: 1.525rem;
+}
+
+.inRow-container .lightBulb {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  background-image: url("./assets/images/lightBulb.png");
+  background-size: cover;
+  margin-left: 0.3rem;
+}
+
+.inRow-container .infoRow span {
+  position: relative;
+  top: 0.05rem;
+}
+
+.inRow-container .infoRow strong {
+  font-family: OpenSansHebrew;
+}
+
+.inRow-container .legendsRow {
+  display: flex;
+  padding-right: 0.625rem;
+}
+
+.inRow-container .legend {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-left: 0.8rem;
+}
+
+.inRow-container .legend .circle {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  margin-left: 0.15rem;
+  position: relative;
+  top: 0.1rem;
+}
+
+.inRow-container .chartContainer {
+  flex-grow: 1;
+  border-radius: 10px;
 }

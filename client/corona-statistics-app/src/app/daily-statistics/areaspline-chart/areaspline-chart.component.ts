@@ -76,7 +76,7 @@ export class AreasplineChartComponent implements OnInit {
 
   private createChartDataObject(): AreasplineChartData {
     const xAxisTitle = 'תאריך';
-    let tooltipTitle: string;
+    let tooltipTitle = new Array<string>();
     let yAxisTitle: string;
     let yAxisData = new Array<Array<number>>();
     yAxisData[0] = new Array<number>();
@@ -94,17 +94,17 @@ export class AreasplineChartComponent implements OnInit {
     switch (this.statisticsDataType) {
       case StatisticsDataType.RespiratoryOverall: {
         yAxisTitle = 'כמות מונשמים';
-        tooltipTitle = 'מונשמים';
+        tooltipTitle.push('מונשמים');
         break;
       }
       case StatisticsDataType.DeathsOverall: {
         yAxisTitle = 'כמות נפטרים';
-        tooltipTitle = 'נפטרים';
+        tooltipTitle.push('נפטרים');
         break;
       }
       case StatisticsDataType.TestsOverall: {
         yAxisTitle = 'מספר בדיקות יומיות';
-        tooltipTitle = 'בדיקות';
+        tooltipTitle.push('בדיקות');
         break;
       }
     }

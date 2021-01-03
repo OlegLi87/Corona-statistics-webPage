@@ -7,6 +7,7 @@ import { LatestUpdateTime } from '../models/statisticsDataModels/latestUpdateTim
 import { StatisticsDataType } from './../models/statisticsDataType';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { RespiratoryAndSickSerious } from '../models/statisticsDataModels/respiratoryAndSickSerious.model';
 
 @Injectable({ providedIn: 'root' })
 export class StatisticsService {
@@ -16,6 +17,7 @@ export class StatisticsService {
   private identifiedChangeTrendData: Array<IdentifiedChangeTrend>;
   private sickSeriousData: Array<SickSerious>;
   private identifiedOutsideSpreadnessData: Array<IdentifiedOutsideSpreadness>;
+  private respiratoryAndSickSeriousData: Array<RespiratoryAndSickSerious>;
 
   latestUpdateTimeDataUpdated = new Subject<LatestUpdateTime>();
   dailyStatisticsDataUpdated = new Subject<DailyStatistics>();
@@ -26,6 +28,9 @@ export class StatisticsService {
   sickSeriousDataUpdated = new Subject<Array<SickSerious>>();
   identifiedOutsideSpreadnessDataUpdated = new Subject<
     Array<IdentifiedOutsideSpreadness>
+  >();
+  respiratoryAndSickSeriousDataUpdated = new Subject<
+    Array<RespiratoryAndSickSerious>
   >();
 
   updateStatisticsData(data: any, statisticsDataType: StatisticsDataType) {
@@ -75,6 +80,14 @@ export class StatisticsService {
         );
         break;
       }
+      case StatisticsDataType.RespiratoryAndSickSerious: {
+        this.respiratoryAndSickSeriousData = data;
+        this.respiratoryAndSickSeriousDataUpdated.next(data);
+      }
     }
+  }
+
+  getRespiratoryAndSickSeriousData(): Array<RespiratoryAndSickSerious> {
+    return this.respiratoryAndSickSeriousData;
   }
 }

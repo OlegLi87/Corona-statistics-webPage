@@ -1,0 +1,11 @@
+.legend.right .circle {
+  background-color: #1c7d7e;
+}
+
+.legend.middle .circle {
+  background-color: #898989;
+}
+
+.legend.left .circle {
+  background-color: #50cbfd;
+}

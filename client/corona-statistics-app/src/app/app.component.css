@@ -90,7 +90,7 @@ header {
 .spreadness-indices {
   height: 23.5rem;
   background-color: #ffffff;
-  margin-top: 1.3rem;
+  margin: 1.3rem 0 1.3rem;
   border-radius: 0.625rem;
   padding: 0 0.07rem;
 }
@@ -102,9 +102,14 @@ header {
   border-bottom: 1px solid #d8d8d9;
 }
 
-.spreadness-charts-container {
+.data-row {
   display: flex;
-  height: calc(100% - 4.75rem);
+  height: 20.25rem;
+  margin-bottom: 1.3rem;
+}
+
+.data-row.second {
+  height: 18.75rem;
 }
 
 .spreadness-chart {
@@ -113,4 +118,19 @@ header {
 
 .spreadness-chart:not(:last-of-type) {
   border-left: 1px solid #d8d8d9;
+}
+
+.inRow-container {
+  background-color: #ffffff;
+  border-radius: 0.625rem;
+}
+
+.data-row.third .right {
+  flex: 4 0 55%;
+  margin-left: 1.25rem;
+  padding: 0 0.625rem;
+}
+
+.data-row.third .left {
+  flex: 1 0 40%;
 }
