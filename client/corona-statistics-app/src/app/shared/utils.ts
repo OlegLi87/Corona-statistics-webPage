@@ -7,7 +7,7 @@ export function getDropDownListItems(): Array<DropDownListItem> {
     'שבועיים אחרונים',
     'חודש אחרון',
   ];
-  const amountsToFetch = [null, 7, 14, 30];
+  const amountsToFetch = [null, 7, 14, 31];
 
   const dropDownListItems: DropDownListItem[] = [];
 

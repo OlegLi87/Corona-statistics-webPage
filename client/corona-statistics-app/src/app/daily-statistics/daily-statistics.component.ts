@@ -31,6 +31,8 @@ export class DailyStatisticsComponent implements OnInit, AfterViewInit {
   toggleButtons: QueryList<ElementRef<HTMLButtonElement>>;
   activeButton: HTMLButtonElement;
   activeInfoIcon: HTMLDivElement;
+  identifiedOverall: number;
+  deathsOverall: number;
 
   @HostListener('document:click', ['$event'])
   onClick() {
@@ -53,6 +55,14 @@ export class DailyStatisticsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+    this.connectionService
+      .fetchFieldSum('identified')
+      .subscribe((data) => (this.identifiedOverall = data.overallSum));
+
+    this.connectionService.fetchFieldSum('deaths').subscribe((data) => {
+      this.deathsOverall = data.overallSum;
+    });
+
     this.statisticsService.dailyStatisticsDataUpdated.subscribe(
       (data) => (this.dailyStatistics = data)
     );

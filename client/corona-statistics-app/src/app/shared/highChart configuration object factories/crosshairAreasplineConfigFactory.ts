@@ -115,26 +115,30 @@ export function getCrosshairAreasplineConfigObject(
       },
     },
     tooltip: {
-      shape: 'square',
-      backgroundColor: 'white',
-      borderColor: 'white',
-      borderRadius: 10,
+      backgroundColor: '#ffff',
+      borderColor: '#ffff',
+      borderRadius: 1,
+      borderWidth: 10,
+      hideDelay: 1,
+      distance: 20,
       shadow: {
-        color: 'grey',
-        offsetX: -1,
-        offsetY: 1,
-        width: 10,
-        opacity: 0.03,
+        color: 'rgba(173,173,173,0.8)',
+        width: 18,
       },
-      style: {
-        color: '#50cbfd',
-        fontFamily: 'OpenSansHebrew',
+      padding: 2,
+      useHTML: true,
+      formatter(this, options) {
+        const series = options.chart.series;
+        let activeIndex = series[0].data.findIndex((d) => d.state === 'hover');
+        const identifiedOverall = chartData.yAxisData[0][activeIndex];
+        const text = chartData.tooltipTitle;
+        const resString = `
+               <div style="font-size:0.88rem;font-family:OpenSansHebrew">
+                 <div style="color:#50cbfd;text-align:right"> ${text} ${identifiedOverall}</div>
+               </div> 
+          `;
+        return resString;
       },
-      split: true,
-      headerFormat:
-        '<p style="font-size:11px;font-weight:400;color:#666666">{point.x}</p>',
-      pointFormat: `<p style="font-size:14px;text-align:center">{point.y}</p> <br> <span style="font-size:14px;top:100px">  ${chartData.tooltipTitle[0]}</span>`,
-      footerFormat: 'footer',
     },
   };
 }

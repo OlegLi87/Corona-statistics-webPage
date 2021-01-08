@@ -2,7 +2,6 @@ export interface DailyStatistics {
   date: Date;
   identified: number;
   identifiedFromMidnight: number;
-  identifiedOverall: number;
   respiratory: number;
   respiratoryFromMidnight: number;
   sickActive: number;
@@ -15,6 +14,5 @@ export interface DailyStatistics {
   sickModerate: number;
   sickCritical: number;
   deaths: number;
-  deathsOverall: number;
   tests: number;
 }

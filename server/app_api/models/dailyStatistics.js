@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const dailyStatisticsSchema = new mongoose.Schema({
   date: Date,
   identified: Number,
-  identifiedFromMidnight: Number,
   identifiedOverall: Number,
+  identifiedFromMidnight: Number,
   respiratory: Number,
   respiratoryFromMidnight: Number,
   recovered: Number,
@@ -18,7 +18,6 @@ const dailyStatisticsSchema = new mongoose.Schema({
   sickModerate: Number,
   sickCritical: Number,
   deaths: Number,
-  deathsOverall: Number,
   tests: Number,
 });
 

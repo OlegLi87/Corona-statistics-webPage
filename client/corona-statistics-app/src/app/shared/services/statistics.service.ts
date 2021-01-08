@@ -1,3 +1,4 @@
+import { EpidemicCurve } from './../models/statisticsDataModels/epidemicCurve.model';
 import { IdentifiedOutsideSpreadness } from './../models/statisticsDataModels/identifiedOutsideSpreadness.model';
 import { SickSerious } from './../models/statisticsDataModels/sickSerious.model';
 import { IdentifiedChangeTrend } from './../models/statisticsDataModels/identifiedChangeTrend.model';
@@ -18,6 +19,7 @@ export class StatisticsService {
   private sickSeriousData: Array<SickSerious>;
   private identifiedOutsideSpreadnessData: Array<IdentifiedOutsideSpreadness>;
   private respiratoryAndSickSeriousData: Array<RespiratoryAndSickSerious>;
+  private epidemicCurveData: Array<EpidemicCurve>;
 
   latestUpdateTimeDataUpdated = new Subject<LatestUpdateTime>();
   dailyStatisticsDataUpdated = new Subject<DailyStatistics>();
@@ -32,6 +34,7 @@ export class StatisticsService {
   respiratoryAndSickSeriousDataUpdated = new Subject<
     Array<RespiratoryAndSickSerious>
   >();
+  epidemicCurveDataUpdated = new Subject<Array<EpidemicCurve>>();
 
   updateStatisticsData(data: any, statisticsDataType: StatisticsDataType) {
     switch (statisticsDataType) {
@@ -83,11 +86,20 @@ export class StatisticsService {
       case StatisticsDataType.RespiratoryAndSickSerious: {
         this.respiratoryAndSickSeriousData = data;
         this.respiratoryAndSickSeriousDataUpdated.next(data);
+        break;
+      }
+      case StatisticsDataType.EpidemicCurve: {
+        this.epidemicCurveData = data;
+        this.epidemicCurveDataUpdated.next(this.epidemicCurveData);
       }
     }
   }
 
   getRespiratoryAndSickSeriousData(): Array<RespiratoryAndSickSerious> {
     return this.respiratoryAndSickSeriousData;
+  }
+
+  getEpidemicCurveData(): Array<EpidemicCurve> {
+    return this.epidemicCurveData;
   }
 }

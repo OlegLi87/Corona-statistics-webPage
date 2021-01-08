@@ -90,13 +90,13 @@ export class RespiratorySickSeriousComponent implements OnInit, AfterViewInit {
 
   private updateChartData(): void {
     // in case component somehow will update itself it will check data against those saved within statistics service.
-    const savedChartStatData = this.statisticsService.getRespiratoryAndSickSeriousData();
+    const savedChartStatData =
+      this.statisticsService.getRespiratoryAndSickSeriousData() ?? [];
     const limit = this.connectionConfig.limit;
 
     if (
-      !savedChartStatData ||
       limit > savedChartStatData.length ||
-      (!limit && savedChartStatData.length < 32)
+      (!limit && savedChartStatData.length < 31)
     ) {
       this.connectionService.fetchStatisticsData(this.connectionConfig);
     } else {

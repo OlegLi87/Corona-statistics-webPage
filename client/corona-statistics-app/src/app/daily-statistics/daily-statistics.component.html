@@ -39,7 +39,7 @@
         <span>מחצות</span>
       </p>
       <p class="overall-stat">
-        {{ dailyStatistics.identifiedOverall | comma }}
+        {{ identifiedOverall | comma }}
         <span>סה"כ</span>
       </p>
     </div>
@@ -252,7 +252,7 @@
     </div>
     <div class="stat-data-container" *ngIf="dailyStatistics">
       <h5>
-        {{ dailyStatistics.deathsOverall | comma }}
+        {{ deathsOverall | comma }}
       </h5>
     </div>
     <button

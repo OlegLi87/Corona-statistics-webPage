@@ -33,6 +33,9 @@ export function getRespiratoryAndSickSeriousConfigObject(
         color: '#d0d1d6',
         zIndex: 10,
       },
+      tickInterval: (function foo() {
+        return Math.floor(chartData.xAxisCategories.length * 0.2);
+      })(),
     },
     yAxis: {
       title: {
@@ -114,8 +117,8 @@ export function getRespiratoryAndSickSeriousConfigObject(
         const respData = chartData.yAxisData[1][markerIndex];
         const resString = `
              <div style="font-size:0.85rem;font-family:OpenSansHebrew">
-               <div style="color:#b6ca51"> חולים קשה ${sickData}</div>
-               <div style="color:#50cbfd;position:relative;left:20px">מונשמים ${respData}</div>
+               <div style="color:#b6ca51;text-align:right"> חולים קשה ${sickData}</div>
+               <div style="color:#50cbfd;text-align:right">מונשמים ${respData}</div>
              </div> 
         `;
         return resString;
