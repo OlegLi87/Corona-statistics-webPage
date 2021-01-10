@@ -126,11 +126,20 @@ header {
 }
 
 .data-row.third .right {
-  flex: 4 0 55%;
+  flex: 0 0 60%;
   margin-left: 1.25rem;
   padding: 0 0.625rem;
 }
 
 .data-row.third .left {
-  flex: 1 0 40%;
+  flex: 1 0 auto;
+}
+
+.data-row.fourth .right {
+  flex: 0 0 67%;
+  margin-left: 1.25rem;
+}
+
+.data-row.fourth .left {
+  flex: 1 0 auto;
 }

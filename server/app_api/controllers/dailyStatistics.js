@@ -27,7 +27,19 @@ const fetchDailyStatisticsByID = async (req, res) => {
 const fetchFieldSum = async (req, res) => {
   try {
     const fieldName = req.query.field ?? 'wakamakafooooo'; // dummy optional string for avoid sending $ sign alone
+    let limit = req.query.limit ?? Infinity;
+    limit = Math.floor(limit);
+    if (isNaN(limit) || limit < 1) throw new Error('limit must be a positive number');
+
     const data = await dailyStatisticsModel.aggregate([
+      {
+        $sort: {
+          date: -1,
+        },
+      },
+      {
+        $limit: limit,
+      },
       {
         $group: {
           _id: null,

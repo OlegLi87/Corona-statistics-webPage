@@ -30,8 +30,14 @@ export class ConnectionService {
       );
   }
 
-  fetchFieldSum(fieldName: string): Observable<{ overallSum: number }> {
-    const connectionString = this.buildConnectionStringForFieldSum(fieldName);
+  fetchFieldSum(
+    fieldName: string,
+    limit: number = undefined
+  ): Observable<{ overallSum: number }> {
+    const connectionString = this.buildConnectionStringForFieldSum(
+      fieldName,
+      limit
+    );
     return this.http.get<{ overallSum: number }>(connectionString);
   }
 
@@ -42,8 +48,12 @@ export class ConnectionService {
     return `${this.connectionString}/dailyStatistics?${projectionQuery}&limit=${limit}`;
   }
 
-  private buildConnectionStringForFieldSum(fieldName: string): string {
-    return `${this.connectionString}/dailyStatistics/fieldSum?field=${fieldName}`;
+  private buildConnectionStringForFieldSum(
+    fieldName: string,
+    limit: number
+  ): string {
+    let connectionString = `${this.connectionString}/dailyStatistics/fieldSum?field=${fieldName}`;
+    return !limit ? connectionString : connectionString + `&limit=${limit}`;
   }
 
   private modifyResponseData(data: Array<any>): Array<any> {

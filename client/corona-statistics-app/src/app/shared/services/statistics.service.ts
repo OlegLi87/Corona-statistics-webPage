@@ -1,3 +1,4 @@
+import { WeeklyTests } from './../models/statisticsDataModels/weeklyTests.model';
 import { EpidemicCurve } from './../models/statisticsDataModels/epidemicCurve.model';
 import { IdentifiedOutsideSpreadness } from './../models/statisticsDataModels/identifiedOutsideSpreadness.model';
 import { SickSerious } from './../models/statisticsDataModels/sickSerious.model';
@@ -20,6 +21,7 @@ export class StatisticsService {
   private identifiedOutsideSpreadnessData: Array<IdentifiedOutsideSpreadness>;
   private respiratoryAndSickSeriousData: Array<RespiratoryAndSickSerious>;
   private epidemicCurveData: Array<EpidemicCurve>;
+  private weeklyTestsData: Array<WeeklyTests>;
 
   latestUpdateTimeDataUpdated = new Subject<LatestUpdateTime>();
   dailyStatisticsDataUpdated = new Subject<DailyStatistics>();
@@ -35,6 +37,7 @@ export class StatisticsService {
     Array<RespiratoryAndSickSerious>
   >();
   epidemicCurveDataUpdated = new Subject<Array<EpidemicCurve>>();
+  weeklyTestsDataUpdated = new Subject<Array<WeeklyTests>>();
 
   updateStatisticsData(data: any, statisticsDataType: StatisticsDataType) {
     switch (statisticsDataType) {
@@ -91,6 +94,12 @@ export class StatisticsService {
       case StatisticsDataType.EpidemicCurve: {
         this.epidemicCurveData = data;
         this.epidemicCurveDataUpdated.next(this.epidemicCurveData);
+        break;
+      }
+      case StatisticsDataType.WeeklyTests: {
+        this.weeklyTestsData = data;
+        this.weeklyTestsDataUpdated.next(data);
+        break;
       }
     }
   }

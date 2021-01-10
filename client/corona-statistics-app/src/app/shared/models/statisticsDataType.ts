@@ -9,4 +9,5 @@ export enum StatisticsDataType {
   IdentifiedOutsideSpreadness,
   RespiratoryAndSickSerious,
   EpidemicCurve,
+  WeeklyTests,
 }

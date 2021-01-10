@@ -1,0 +1,34 @@
+.header {
+  padding-bottom: 0;
+}
+
+.legend.left {
+  margin-left: 0.3rem;
+}
+
+.right .circle {
+  background-color: #50cbfd;
+}
+.left .circle {
+  background-color: #1c7d7e;
+}
+
+.infoRow {
+  display: block;
+  height: 3.675rem;
+  margin: 0.8rem 0 0 0;
+  padding: 0.3rem 0.6rem 0 1rem;
+}
+
+.lowerInfoRow {
+  display: flex;
+  margin-top: 1.1rem;
+}
+
+.lowerInfoRow span:not(.info-icon) {
+  position: relative;
+  top: 0.1rem;
+}
+.info-icon {
+  margin-right: 0.1rem;
+}

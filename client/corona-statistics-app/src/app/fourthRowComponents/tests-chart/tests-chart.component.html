@@ -1,0 +1,34 @@
+<div class="mainContainer">
+  <div class="header">
+    <div class="upperRow">
+      <div class="title">בדיקות לגילוי נדבקים</div>
+      <div class="legendsRow">
+        <div class="legend right">
+          <div class="circle"></div>
+          <span>בדיקות</span>
+        </div>
+        <div class="legend left">
+          <div class="circle"></div>
+          <span>מאומתים</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="infoRow">
+      <div class="upperInfoRow">
+        <div class="lightBulb"></div>
+        <span
+          >סה״כ <strong>{{ lastWeekTest | comma }}</strong> בדיקות בשבוע האחרון
+          (<strong>{{ weeklyIdentified }}%</strong>
+          אחוז המאומתים השבועי הממוצע)
+        </span>
+      </div>
+      <div class="lowerInfoRow">
+        <span class="info-icon">i</span>
+        <span>הנתונים אינם כוללים מידע על בדיקות לאבחון החלמה </span>
+      </div>
+    </div>
+  </div>
+
+  <div [id]="chartContainerId" class="chartContainer"></div>
+</div>

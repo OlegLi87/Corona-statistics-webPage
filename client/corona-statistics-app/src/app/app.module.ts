@@ -14,6 +14,8 @@ import { SeriousCriticalSickChartComponent } from './spreadnessChartComponents/s
 import { IdentifiedOutsideSpreadnessChartComponent } from './spreadnessChartComponents/identified-outside-spreadness-chart/identified-outside-spreadness-chart.component';
 import { EpidemicalCurveComponent } from './thirdRowComponents/epidemical-curve/epidemical-curve.component';
 import { RespiratorySickSeriousComponent } from './thirdRowComponents/respiratory-sick-serious/respiratory-sick-serious.component';
+import { TrafficLightProgramComponent } from './fourthRowComponents/traffic-light-program/traffic-light-program.component';
+import { TestsChartComponent } from './fourthRowComponents/tests-chart/tests-chart.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { RespiratorySickSeriousComponent } from './thirdRowComponents/respirator
     IdentifiedOutsideSpreadnessChartComponent,
     EpidemicalCurveComponent,
     RespiratorySickSeriousComponent,
+    TrafficLightProgramComponent,
+    TestsChartComponent,
   ],
   imports: [BrowserModule, HttpClientModule],
   providers: [

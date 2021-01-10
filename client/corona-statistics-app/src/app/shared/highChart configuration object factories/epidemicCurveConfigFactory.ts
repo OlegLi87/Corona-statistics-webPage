@@ -1,4 +1,3 @@
-import { borderRadius } from 'highcharts-border-radius';
 import { AreasplineChartData } from 'src/app/shared/models/areasplineChartData.model';
 
 export function getEpidemicCurveConfigObject(
@@ -159,7 +158,7 @@ export function getEpidemicCurveConfigObject(
         marker: {
           states: {
             hover: {
-              radiusPlus: 3,
+              radiusPlus: 3.2,
               lineWidth: 0,
             },
             normal: {
