@@ -1,1 +1,95 @@
-<p>traffic-light-program works!</p>
+<div class="mainContainer">
+  <div class="header">
+    <div class="upperRow">
+      <div class="title">תכנית הרמזור</div>
+      <div class="leftSideContent">
+        <div class="infoRow">
+          <span class="info-icon">i</span>
+          <span> הנתונים נכונים לתאריך {{ "46464" }}</span>
+        </div>
+        <div class="div inputContainer">
+          <span class="inputIcon"></span>
+          <input
+            type="text"
+            placeholder="חיפוש ישוב"
+            (keyup)="setDataToDisplay($event)"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="middleRow">* מרכיבי ציון הרמזור (לפי נתוני השבוע האחרון)</div>
+
+    <div class="lowerRow">
+      <div class="section">
+        <div class="square red"></div>
+        <div class="text">
+          <p>אדום - פעילות מינימלית</p>
+          <p class="italic">ציון 7.5 ומעלה</p>
+        </div>
+      </div>
+      <div class="section">
+        <div class="square orange"></div>
+        <div class="text">
+          <p>כתום - פעילות מצומצמת</p>
+          <p class="italic">ציון בין 6 ל - 7.5</p>
+        </div>
+      </div>
+      <div class="section">
+        <div class="square yellow"></div>
+        <div class="text">
+          <p>צהוב - פעילות מוגבלת</p>
+          <p class="italic">ציון בין 4.5 ל - 6</p>
+        </div>
+      </div>
+      <div class="section">
+        <div class="square green"></div>
+        <div class="text">
+          <p>ירוק - פעילות מורחבת</p>
+          <p class="italic">ציון עד 4.5</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tableContainer">
+    <div class="tableContent">
+      <table>
+        <thead>
+          <tr>
+            <th
+              *ngFor="let header of headerColumns; let i = index"
+              [ngClass]="{ darker: [2, 3, 4].includes(i) }"
+            >
+              <div class="cellButton" (click)="changeSortingOrder(header)">
+                {{ header.name }}
+              </div>
+              <div
+                class="cellArrow"
+                [ngClass]="{
+                  arrowDown: header.sortingMultiplyer === -1,
+                  arrowHidden: !header.sortingMultiplyer
+                }"
+              ></div>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let d of statDataToDisplay">
+            <td class="bold">{{ d.city }}</td>
+            <td class="bold">
+              <div class="gradeSquare" [class]="getSquareColorClass(d.grade)">
+                {{ d.grade }}
+              </div>
+            </td>
+            <td class="darker">{{ d.newSick }}</td>
+            <td class="darker">{{ d.positiveTests }}%</td>
+            <td class="darker">{{ d.identifiedChange }}%</td>
+            <td>{{ d.activeSick }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

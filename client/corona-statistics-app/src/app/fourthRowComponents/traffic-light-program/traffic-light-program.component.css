@@ -1,0 +1,223 @@
+.mainContainer {
+  display: block;
+}
+
+.leftSideContent {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  top: 1rem;
+}
+
+.infoRow {
+  border-radius: 9px;
+  margin: 0 0 0 0.6rem;
+  padding: 0 0 0 0.6rem;
+  font-size: 0.75rem;
+}
+
+.inputContainer {
+  border: 1px solid #e4e9f2;
+  padding: 0.25rem 0.9375rem;
+  border-radius: 14.5px;
+}
+
+.inputIcon {
+  display: inline-block;
+  width: 1.15rem;
+  height: 1.15rem;
+  background-image: url("../../../assets/images/inputIcon.png");
+  background-size: cover;
+  vertical-align: middle;
+  margin-left: 0.4rem;
+}
+
+input {
+  border: none;
+  font-family: OpenSansHebrewRegular;
+  font-size: 0.95rem;
+}
+
+::placeholder {
+  opacity: 0.8;
+}
+
+input:focus {
+  outline: none;
+}
+
+.middleRow {
+  font-size: 0.75rem;
+  margin-top: 0.3rem;
+}
+
+.lowerRow {
+  display: flex;
+  margin-top: 0.7rem;
+}
+
+.lowerRow p {
+  margin: 0;
+}
+
+.section {
+  display: flex;
+  margin-left: 1.1rem;
+}
+
+.section .square {
+  width: 2rem;
+  height: 2rem;
+  margin-left: 0.4rem;
+  border-radius: 2px;
+}
+
+.red {
+  background-color: #fa9e8f;
+}
+
+.orange {
+  background-color: #f2c580;
+}
+
+.yellow {
+  background-color: #fcfc70;
+}
+
+.green {
+  background-color: #b8de92;
+}
+
+.lowerRow p:not(.italic) {
+  font-size: 0.9rem;
+  font-family: OpenSansHebrewRegular;
+  position: relative;
+  bottom: 0.14rem;
+}
+
+.lowerRow .italic {
+  font-size: 0.9rem;
+  font-style: italic;
+  font-family: OpenSansHebrewLight;
+  font-weight: 400;
+  opacity: 0.7;
+  margin-top: 0.09em;
+}
+
+.tableContainer {
+  height: 12.25rem;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: scroll;
+  direction: ltr;
+}
+
+.tableContent {
+  direction: rtl;
+}
+
+table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  font-family: OpenSansHebrewRegular;
+  font-size: 0.875rem;
+}
+
+th {
+  background-color: #e6f1f3;
+  font-weight: 400;
+  padding: 2px 5px 2px 0;
+  position: sticky;
+  top: 0;
+}
+
+th:nth-child(1) {
+  width: 9.375rem;
+}
+
+th:not(:nth-child(1)) {
+  width: 130.4px;
+}
+
+th.darker {
+  background-color: #daeaee;
+}
+
+th:nth-child(1) {
+  margin: auto;
+  text-align: right;
+}
+
+.cellButton {
+  display: inline-block;
+  width: fit-content;
+  cursor: pointer;
+  vertical-align: middle;
+  margin-left: 0.15rem;
+}
+
+.cellArrow {
+  width: 0.625rem;
+  height: 0.468rem;
+  position: relative;
+  top: 0.05rem;
+  background-image: url("../../../assets/images/blueArrow.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+.cellArrow.arrowDown {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.cellArrow.arrowHidden {
+  display: none;
+}
+
+td {
+  border-bottom: thin solid #dddfdf;
+  padding: 0.28rem 0;
+}
+
+td:first-of-type {
+  padding-right: 0.3rem;
+}
+
+td:not(:first-of-type) {
+  text-align: center;
+}
+
+td.bold {
+  font-weight: 900;
+}
+
+td.darker {
+  background-color: #f7fafc;
+}
+
+.gradeSquare {
+  width: 1.75rem;
+  height: 1.5rem;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  text-decoration: underline;
+}
+
+::-webkit-scrollbar {
+  width: 0.4rem;
+  height: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #969696;
+}

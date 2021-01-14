@@ -45,7 +45,7 @@ export class TestsChartComponent implements OnInit {
     this.connectionService.fetchFieldSum('tests', 7).subscribe((data) => {
       this.lastWeekTest = data.overallSum;
       this.connectionService
-        .fetchFieldSum('identified', 1)
+        .fetchFieldSum('identified', 7)
         .subscribe((data) => {
           this.weeklyIdentified = (
             (data.overallSum / this.lastWeekTest) *

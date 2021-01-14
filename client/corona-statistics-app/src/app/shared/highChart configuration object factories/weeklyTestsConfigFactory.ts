@@ -50,9 +50,6 @@ export function getWeeklyTestsConfigObject(
     credits: {
       enabled: false,
     },
-    tooltip: {
-      shared: true,
-    },
     series: [
       {
         name: '',
@@ -141,6 +138,37 @@ export function getWeeklyTestsConfigObject(
             },
           },
         },
+      },
+    },
+    tooltip: {
+      shared: true,
+      backgroundColor: '#ffff',
+      borderColor: '#ffff',
+      borderRadius: 1,
+      borderWidth: 10,
+      hideDelay: 1,
+      distance: 20,
+      shadow: {
+        color: 'rgba(173,173,173,0.8)',
+        width: 18,
+      },
+      padding: 2,
+      useHTML: true,
+      formatter(this, options) {
+        const series = options.chart.series;
+        let columnIndex = series[0].data.findIndex((d) => d.state === 'hover');
+        const tests = chartData.yAxisData[0][columnIndex];
+        const identified = chartData.yAxisData[1][columnIndex];
+        const resString = `
+               <div style="font-size:0.9rem;font-family:OpenSansHebrew">
+                 <div style="color:#50cbfd;text-align:right">בדיקות ${tests}</div>
+                 <div style="color:#1c7d7e;text-align:right">מאומתים ${(
+                   (identified / tests) *
+                   100
+                 ).toFixed(1)}%</div>
+               </div> 
+          `;
+        return resString;
       },
     },
   };
