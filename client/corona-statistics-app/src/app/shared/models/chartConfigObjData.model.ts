@@ -1,4 +1,4 @@
-export interface AreasplineChartData {
+export interface ChartConfigObjData {
   xAxisTitle: string;
   tooltipTitle: Array<string>;
   xAxisCategories: Array<string>;

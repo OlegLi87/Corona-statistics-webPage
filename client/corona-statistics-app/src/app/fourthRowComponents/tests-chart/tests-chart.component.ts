@@ -1,4 +1,4 @@
-import { AreasplineChartData } from 'src/app/shared/models/areasplineChartData.model';
+import { ChartConfigObjData } from 'src/app/shared/models/chartConfigObjData.model';
 import { WeeklyTests } from './../../shared/models/statisticsDataModels/weeklyTests.model';
 import { StatisticsService } from 'src/app/shared/services/statistics.service';
 import { ConnectionService } from 'src/app/shared/services/connection.service';
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConnectionConfig } from 'src/app/shared/models/connectionConfig.model';
 import { StatisticsDataType } from 'src/app/shared/models/statisticsDataType';
 import { getFormattedDateString } from 'src/app/shared/utils';
-import { getWeeklyTestsConfigObject } from 'src/app/shared/highChart configuration object factories/weeklyTestsConfigFactory';
+import { getWeeklyTestsChartConfigObjFactory } from 'src/app/shared/highChart configuration object factories/weeklyTestsChartConfigObjFactory';
 
 declare const Highcharts: any;
 
@@ -59,11 +59,11 @@ export class TestsChartComponent implements OnInit {
     const chartData = this.createChartDataObj();
     Highcharts.chart(
       this.chartContainerId,
-      getWeeklyTestsConfigObject(chartData)
+      getWeeklyTestsChartConfigObjFactory(chartData)
     );
   }
 
-  private createChartDataObj(): AreasplineChartData {
+  private createChartDataObj(): ChartConfigObjData {
     const xAxisTitle = 'תאריך בדיקה';
     const yAxisTitle = 'מספר בדיקות';
     const tooltipTitle = ['בדיקות', 'מאומתים'];

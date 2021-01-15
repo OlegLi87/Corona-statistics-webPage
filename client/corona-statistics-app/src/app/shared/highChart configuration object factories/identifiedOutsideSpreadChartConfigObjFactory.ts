@@ -1,11 +1,13 @@
-import { AreasplineChartData } from 'src/app/shared/models/areasplineChartData.model';
-import * as borderRadius from 'highcharts-border-radius'; // using external plugin to make different borders on the column
+import { ChartConfigObjData } from 'src/app/shared/models/chartConfigObjData.model';
+
+// using external plugin to configure a border radius on each side separately
+import * as borderRadius from 'highcharts-border-radius';
 
 declare const Highcharts: any;
 borderRadius(Highcharts);
 
-export function getIdentifiedOutsideSpreadnessColumnConfigObject(
-  chartData: AreasplineChartData
+export function getIdentifiedOutsideSpreadChartConfigObjFactory(
+  chartConfigObj: ChartConfigObjData
 ): any {
   return {
     chart: {
@@ -24,15 +26,15 @@ export function getIdentifiedOutsideSpreadnessColumnConfigObject(
     },
     xAxis: {
       title: {
-        text: chartData.xAxisTitle ?? '',
+        text: chartConfigObj.xAxisTitle ?? '',
       },
-      categories: chartData.xAxisCategories,
+      categories: chartConfigObj.xAxisCategories,
       lineWidth: 0,
       left: 60,
     },
     yAxis: {
       title: {
-        text: chartData.yAxisTitle ?? '',
+        text: chartConfigObj.yAxisTitle ?? '',
       },
       gridLineWidth: 0,
     },
@@ -48,7 +50,7 @@ export function getIdentifiedOutsideSpreadnessColumnConfigObject(
     series: [
       {
         name: '',
-        data: chartData.yAxisData[0],
+        data: chartConfigObj.yAxisData[0],
         color: '#b6ca51',
         borderRadiusTopLeft: 3,
         borderRadiusTopRight: 3,

@@ -12,8 +12,17 @@
           <input
             type="text"
             placeholder="חיפוש ישוב"
+            #input
             (keyup)="setDataToDisplay($event)"
           />
+          <ul class="citiesList" *ngIf="isListDisplayed(input)">
+            <li
+              *ngFor="let stat of statDataToDisplay"
+              (click)="statDataToDisplay = [stat]; input.value = stat.city"
+            >
+              {{ stat.city }}
+            </li>
+          </ul>
         </div>
       </div>
     </div>

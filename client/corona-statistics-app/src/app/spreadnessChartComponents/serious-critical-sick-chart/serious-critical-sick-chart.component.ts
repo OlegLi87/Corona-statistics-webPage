@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { getSickSeriousAreasplineConfigObject } from 'src/app/shared/highChart configuration object factories/sickSeriousAreasplineConfigFactory';
-import { AreasplineChartData } from 'src/app/shared/models/areasplineChartData.model';
+import { getSickSeriousChartConfigObjFactory } from 'src/app/shared/highChart configuration object factories/sickSeriousChartConfigObjFactory';
+import { ChartConfigObjData } from 'src/app/shared/models/chartConfigObjData.model';
 import { ConnectionConfig } from 'src/app/shared/models/connectionConfig.model';
 import { SickSerious } from 'src/app/shared/models/statisticsDataModels/sickSerious.model';
 import { StatisticsDataType } from 'src/app/shared/models/statisticsDataType';
@@ -39,11 +39,11 @@ export class SeriousCriticalSickChartComponent implements OnInit {
     const chartData = this.createChartDataObject(data);
     Highcharts.chart(
       this.chartContainerId,
-      getSickSeriousAreasplineConfigObject(chartData)
+      getSickSeriousChartConfigObjFactory(chartData)
     );
   }
 
-  private createChartDataObject(data: Array<SickSerious>): AreasplineChartData {
+  private createChartDataObject(data: Array<SickSerious>): ChartConfigObjData {
     const xAxisTitle = null;
     const yAxisTitle = null;
     const tooltipTitle = null;

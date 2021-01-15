@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 interface ColumnHeader {
   name: string;
@@ -24,6 +24,12 @@ export class TrafficLightProgramComponent implements OnInit {
   statData = new Array<StatData>();
   statDataToDisplay = new Array<StatData>();
   headerColumns = new Array<ColumnHeader>();
+  latestClickedElement: HTMLElement;
+
+  @HostListener('body:click', ['$event'])
+  onclick(e: MouseEvent) {
+    this.latestClickedElement = e.target as HTMLElement;
+  }
 
   constructor() {}
 
@@ -38,6 +44,14 @@ export class TrafficLightProgramComponent implements OnInit {
     if (grade >= 4.5 && grade < 6) return 'yellow';
     if (grade >= 6 && grade < 7.5) return 'orange';
     return 'red';
+  }
+
+  isListDisplayed(input: HTMLInputElement): boolean {
+    return (
+      this.latestClickedElement === input &&
+      input.value.length > 1 &&
+      this.statDataToDisplay.length > 0
+    );
   }
 
   changeSortingOrder(header: ColumnHeader): void {

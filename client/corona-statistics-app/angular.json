@@ -22,7 +22,7 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.css"],
             "scripts": [
-              "src/assets/js/highcharts.js",
+              "src/assets/js/highstock.js",
               "src/assets/js/svg.min.js"
             ]
           },

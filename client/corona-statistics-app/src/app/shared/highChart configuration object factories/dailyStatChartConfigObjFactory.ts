@@ -1,14 +1,20 @@
-import { AreasplineChartData } from '../models/areasplineChartData.model';
+import { ChartConfigObjData } from '../models/chartConfigObjData.model';
+import {
+  crosshairLblConfigObj,
+  getCommaFormatedString,
+  getXAxisLabelsStep,
+  toolTipConfigObj,
+} from './utils';
 
-export function getCrosshairAreasplineConfigObject(
-  chartData: AreasplineChartData
+export function getDailyStatChartConfigObj(
+  chartConfigObj: ChartConfigObjData
 ): any {
   return {
     chart: {
       type: 'areaspline',
       marginBottom: 47,
-      marginLeft: 65,
-      marginRight: -40,
+      marginLeft: 60,
+      marginRight: -20,
       spacing: [20, 10, 15, 10],
     },
     title: {
@@ -22,7 +28,7 @@ export function getCrosshairAreasplineConfigObject(
     },
     series: [
       {
-        data: chartData.yAxisData[0],
+        data: chartConfigObj.yAxisData[0],
         color: '#66d2fd',
         lineWidth: 1,
         states: {
@@ -64,9 +70,9 @@ export function getCrosshairAreasplineConfigObject(
     },
     xAxis: {
       left: 45,
-      categories: chartData.xAxisCategories,
+      categories: chartConfigObj.xAxisCategories,
       title: {
-        text: chartData.xAxisTitle ?? '',
+        text: chartConfigObj.xAxisTitle ?? '',
         style: {
           fontSize: '0.9rem',
           fontWeight: 400,
@@ -79,17 +85,24 @@ export function getCrosshairAreasplineConfigObject(
           fontWeight: 500,
           fontFamily: 'OpenSansHebrewRegular',
         },
-        step: 4,
+        step: getXAxisLabelsStep(chartConfigObj.xAxisCategories),
       },
       crosshair: {
         width: 1,
         zIndex: 10,
         color: '#b0acac',
+        label: {
+          ...crosshairLblConfigObj,
+          backgroundColor: '#50cbfd',
+          formatter(arg) {
+            return chartConfigObj.xAxisCategories[arg];
+          },
+        },
       },
     },
     yAxis: {
       title: {
-        text: chartData.yAxisTitle ?? '',
+        text: chartConfigObj.yAxisTitle ?? '',
         margin: 19,
         style: {
           fontSize: '0.75rem',
@@ -112,29 +125,25 @@ export function getCrosshairAreasplineConfigObject(
         color: '#b0acac',
         dashStyle: 'Dash',
         snap: false,
+        label: {
+          ...crosshairLblConfigObj,
+          backgroundColor: '#50cbfd',
+          formatter: getCommaFormatedString,
+        },
       },
     },
     tooltip: {
-      backgroundColor: '#ffff',
-      borderColor: '#ffff',
-      borderRadius: 1,
-      borderWidth: 10,
-      hideDelay: 1,
-      distance: 20,
-      shadow: {
-        color: 'rgba(173,173,173,0.8)',
-        width: 18,
-      },
-      padding: 2,
-      useHTML: true,
+      ...toolTipConfigObj,
       formatter(this, options) {
         const series = options.chart.series;
         let activeIndex = series[0].data.findIndex((d) => d.state === 'hover');
-        const identifiedOverall = chartData.yAxisData[0][activeIndex];
-        const text = chartData.tooltipTitle;
+        const data = chartConfigObj.yAxisData[0][activeIndex];
+        const text = chartConfigObj.tooltipTitle;
         const resString = `
                <div style="font-size:0.88rem;font-family:OpenSansHebrew">
-                 <div style="color:#50cbfd;text-align:right"> ${text} ${identifiedOverall}</div>
+                 <div style="color:#50cbfd;text-align:right"> ${text} ${getCommaFormatedString(
+          data
+        )}</div>
                </div> 
           `;
         return resString;

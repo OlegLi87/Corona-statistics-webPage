@@ -19,7 +19,6 @@
 
 html {
   direction: rtl;
-  overflow: scroll;
   line-height: 1.15;
   font-family: OpenSansHebrew;
 }
@@ -32,10 +31,6 @@ body {
 
 span {
   font-family: OpenSansHebrewRegular;
-}
-
-::-webkit-scrollbar {
-  width: 0;
 }
 
 /* rules targeting spreadness indices components which share the same style (avoiding view encapsulation) */
@@ -216,4 +211,16 @@ span {
 .inRow-container .chartContainer {
   flex-grow: 1;
   border-radius: 10px;
+}
+
+body::-webkit-scrollbar,
+.tableContainer::-webkit-scrollbar {
+  width: 0.4rem;
+  height: 0;
+}
+
+body::-webkit-scrollbar-thumb,
+.tableContainer::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #969696;
 }

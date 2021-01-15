@@ -1,7 +1,13 @@
-import { AreasplineChartData } from 'src/app/shared/models/areasplineChartData.model';
+import { ChartConfigObjData } from 'src/app/shared/models/chartConfigObjData.model';
+import {
+  crosshairLblConfigObj,
+  getCommaFormatedString,
+  getXAxisLabelsStep,
+  toolTipConfigObj,
+} from './utils';
 
-export function getEpidemicCurveConfigObject(
-  chartData: AreasplineChartData
+export function getEpidemicCurveChartConfigObjFactory(
+  chartConfigObj: ChartConfigObjData
 ): any {
   let counter = 0;
   return {
@@ -25,21 +31,26 @@ export function getEpidemicCurveConfigObject(
       enabled: false,
     },
     xAxis: {
-      categories: chartData.xAxisCategories,
+      categories: chartConfigObj.xAxisCategories,
       crosshair: {
         width: 1.5,
         color: '#d0d1d6',
         zIndex: 10,
+        label: {
+          ...crosshairLblConfigObj,
+          backgroundColor: '#1c7d7e',
+          formatter(val) {
+            return chartConfigObj.xAxisCategories[val];
+          },
+        },
       },
       title: {
-        text: chartData.xAxisTitle ?? '',
+        text: chartConfigObj.xAxisTitle ?? '',
         style: {
           fontSize: '0.88rem',
         },
       },
-      tickInterval: (function () {
-        return Math.floor(chartData.xAxisCategories.length * 0.2);
-      })(),
+      tickInterval: getXAxisLabelsStep(chartConfigObj.xAxisCategories),
     },
     yAxis: [
       {
@@ -51,7 +62,9 @@ export function getEpidemicCurveConfigObject(
         },
         tickInterval: 35000,
         labels: {
-          formatter: labelsFormatter,
+          formatter(val) {
+            return getCommaFormatedString(val.pos);
+          },
           style: {
             color: '#68d3ff',
             fontSize: '0.72rem',
@@ -63,6 +76,11 @@ export function getEpidemicCurveConfigObject(
           dashStyle: 'Dash',
           snap: false,
           zIndex: 10,
+          label: {
+            ...crosshairLblConfigObj,
+            formatter: getCommaFormatedString,
+            backgroundColor: '#48caf5',
+          },
         },
       },
       {
@@ -76,9 +94,11 @@ export function getEpidemicCurveConfigObject(
         gridLineWidth: 0,
         opposite: true,
         tickInterval: 3000,
-        max: chartData.xAxisCategories.length === 31 ? 6500 : null,
+        max: chartConfigObj.xAxisCategories.length === 31 ? 6500 : null,
         labels: {
-          formatter: labelsFormatter,
+          formatter(val) {
+            return getCommaFormatedString(val.pos);
+          },
           style: {
             color: '#389d9e',
             fontSize: '0.72rem',
@@ -89,7 +109,7 @@ export function getEpidemicCurveConfigObject(
     series: [
       {
         type: 'areaspline',
-        data: chartData.yAxisData[0],
+        data: chartConfigObj.yAxisData[0],
         fillColor: {
           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
           stops: [
@@ -113,7 +133,7 @@ export function getEpidemicCurveConfigObject(
       },
       {
         type: 'column',
-        data: chartData.yAxisData[1],
+        data: chartConfigObj.yAxisData[1],
         color: '#898989',
         borderRadiusTopLeft: 4,
         borderRadiusTopRight: 4,
@@ -128,7 +148,7 @@ export function getEpidemicCurveConfigObject(
       },
       {
         type: 'column',
-        data: chartData.yAxisData[2],
+        data: chartConfigObj.yAxisData[2],
         color: '#1c7d7e',
         borderRadiusTopLeft: 4,
         borderRadiusTopRight: 4,
@@ -144,7 +164,7 @@ export function getEpidemicCurveConfigObject(
     plotOptions: {
       column: {
         groupPadding: getGroupPadding(),
-        pointWidth: chartData.xAxisCategories.length > 30 ? 7 : 8.5,
+        pointWidth: chartConfigObj.xAxisCategories.length > 30 ? 7 : 8.5,
         borderWidth: 0,
       },
       series: {
@@ -171,30 +191,25 @@ export function getEpidemicCurveConfigObject(
       },
     },
     tooltip: {
+      ...toolTipConfigObj,
       shared: true,
-      backgroundColor: '#ffff',
-      borderColor: '#ffff',
-      borderRadius: 1,
-      borderWidth: 10,
-      hideDelay: 1,
-      distance: 20,
-      shadow: {
-        color: 'rgba(173,173,173,0.8)',
-        width: 18,
-      },
-      padding: 2,
-      useHTML: true,
       formatter(this, options) {
         const series = options.chart.series;
         let activeIndex = series[0].data.findIndex((d) => d.state === 'hover');
-        const identifiedOverall = chartData.yAxisData[0][activeIndex];
-        const recovered = chartData.yAxisData[1][activeIndex];
-        const identified = chartData.yAxisData[2][activeIndex];
+        const identifiedOverall = chartConfigObj.yAxisData[0][activeIndex];
+        const recovered = chartConfigObj.yAxisData[1][activeIndex];
+        const identified = chartConfigObj.yAxisData[2][activeIndex];
         const resString = `
                <div style="font-size:0.88rem;font-family:OpenSansHebrew">
-                 <div style="color:#50cbfd;text-align:right"> מאומתים מצטבר ${identifiedOverall}</div>
-                 <div style="color:#898989;text-align:right">מחלימים חדשים ${recovered}</div>
-                 <div style="color:#1c7d7e;text-align:right">מאומתים חדשים ${identified}</div>
+                 <div style="color:#50cbfd;text-align:right"> מאומתים מצטבר ${getCommaFormatedString(
+                   identifiedOverall
+                 )}</div>
+                 <div style="color:#898989;text-align:right">מחלימים חדשים ${getCommaFormatedString(
+                   recovered
+                 )}</div>
+                 <div style="color:#1c7d7e;text-align:right">מאומתים חדשים ${getCommaFormatedString(
+                   identified
+                 )}</div>
                </div> 
           `;
         return resString;
@@ -202,18 +217,8 @@ export function getEpidemicCurveConfigObject(
     },
   };
 
-  function labelsFormatter(this): string {
-    const arr = [...this.value.toString(10)];
-    const index = arr.length - 3;
-    if (index > 0) {
-      arr.splice(index, 0, ',');
-      return arr.join('');
-    }
-    return arr.join('');
-  }
-
   function getGroupPadding(): number {
-    switch (chartData.xAxisCategories.length) {
+    switch (chartConfigObj.xAxisCategories.length) {
       case 7: {
         return 0.34;
       }

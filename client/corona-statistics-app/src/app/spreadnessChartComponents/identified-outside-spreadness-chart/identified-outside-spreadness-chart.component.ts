@@ -1,11 +1,11 @@
-import { AreasplineChartData } from 'src/app/shared/models/areasplineChartData.model';
+import { ChartConfigObjData } from 'src/app/shared/models/chartConfigObjData.model';
 import { IdentifiedOutsideSpreadness } from './../../shared/models/statisticsDataModels/identifiedOutsideSpreadness.model';
 import { Component, OnInit } from '@angular/core';
 import { ConnectionConfig } from 'src/app/shared/models/connectionConfig.model';
 import { StatisticsDataType } from 'src/app/shared/models/statisticsDataType';
 import { ConnectionService } from 'src/app/shared/services/connection.service';
 import { StatisticsService } from 'src/app/shared/services/statistics.service';
-import { getIdentifiedOutsideSpreadnessColumnConfigObject } from 'src/app/shared/highChart configuration object factories/identifiedOutsideSpreadnessColumnConfigFactory';
+import { getIdentifiedOutsideSpreadChartConfigObjFactory } from 'src/app/shared/highChart configuration object factories/identifiedOutsideSpreadChartConfigObjFactory';
 
 declare const Highcharts: any;
 
@@ -41,13 +41,13 @@ export class IdentifiedOutsideSpreadnessChartComponent implements OnInit {
     const chartData = this.createChartDataObject(data);
     Highcharts.chart(
       this.chartContainerId,
-      getIdentifiedOutsideSpreadnessColumnConfigObject(chartData)
+      getIdentifiedOutsideSpreadChartConfigObjFactory(chartData)
     );
   }
 
   private createChartDataObject(
     data: Array<IdentifiedOutsideSpreadness>
-  ): AreasplineChartData {
+  ): ChartConfigObjData {
     const xAxisTitle = null;
     const yAxisTitle = null;
     const tooltipTitle = null;

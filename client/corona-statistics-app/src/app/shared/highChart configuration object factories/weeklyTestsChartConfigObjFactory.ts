@@ -1,11 +1,10 @@
-import { AreasplineChartData } from 'src/app/shared/models/areasplineChartData.model';
-
-import * as multicolorChart from 'highcharts-multicolor-series';
+import { ChartConfigObjData } from 'src/app/shared/models/chartConfigObjData.model';
+import { getCommaFormatedString, toolTipConfigObj } from './utils';
 
 declare const Highcharts: any;
 
-export function getWeeklyTestsConfigObject(
-  chartData: AreasplineChartData
+export function getWeeklyTestsChartConfigObjFactory(
+  chartConfigObj: ChartConfigObjData
 ): any {
   return {
     chart: {
@@ -24,22 +23,24 @@ export function getWeeklyTestsConfigObject(
     },
     xAxis: {
       title: {
-        text: chartData.xAxisTitle ?? '',
+        text: chartConfigObj.xAxisTitle ?? '',
       },
-      categories: chartData.xAxisCategories,
+      categories: chartConfigObj.xAxisCategories,
       lineWidth: 0,
       left: 60,
     },
     yAxis: {
       title: {
-        text: chartData.yAxisTitle ?? '',
+        text: chartConfigObj.yAxisTitle ?? '',
         style: {
           fontSize: '0.7rem',
         },
       },
       gridLineWidth: 0,
       labels: {
-        formatter: labelsFormatter,
+        formatter(arg) {
+          return getCommaFormatedString(arg.pos);
+        },
       },
       tickInterval: 10000,
       offset: -10,
@@ -53,13 +54,15 @@ export function getWeeklyTestsConfigObject(
     series: [
       {
         name: '',
-        data: chartData.yAxisData[0],
+        data: chartConfigObj.yAxisData[0],
         color: '#50cbfd',
         dataLabels: {
           enabled: true,
           color: 'rgba(120,124,138,1)',
           y: -10,
-          formatter: labelsFormatter,
+          formatter() {
+            return getCommaFormatedString(this.y);
+          },
           style: {
             fontSize: '0.7rem',
             fontFamily: 'OpenSansHebrewLight',
@@ -69,7 +72,7 @@ export function getWeeklyTestsConfigObject(
       },
       {
         name: '',
-        data: chartData.yAxisData[1],
+        data: chartConfigObj.yAxisData[1],
         color: '#1c7d7e',
         dataLabels: {
           enabled: true,
@@ -85,7 +88,7 @@ export function getWeeklyTestsConfigObject(
             fontWeight: 100,
           },
           formatter(this) {
-            const index = chartData.xAxisCategories.findIndex(
+            const index = chartConfigObj.xAxisCategories.findIndex(
               (d) => d === this.key
             );
             return getIdentifiedRatio(index) + '%';
@@ -141,27 +144,18 @@ export function getWeeklyTestsConfigObject(
       },
     },
     tooltip: {
+      ...toolTipConfigObj,
       shared: true,
-      backgroundColor: '#ffff',
-      borderColor: '#ffff',
-      borderRadius: 1,
-      borderWidth: 10,
-      hideDelay: 1,
-      distance: 20,
-      shadow: {
-        color: 'rgba(173,173,173,0.8)',
-        width: 18,
-      },
-      padding: 2,
-      useHTML: true,
       formatter(this, options) {
         const series = options.chart.series;
         let columnIndex = series[0].data.findIndex((d) => d.state === 'hover');
-        const tests = chartData.yAxisData[0][columnIndex];
-        const identified = chartData.yAxisData[1][columnIndex];
+        const tests = chartConfigObj.yAxisData[0][columnIndex];
+        const identified = chartConfigObj.yAxisData[1][columnIndex];
         const resString = `
                <div style="font-size:0.9rem;font-family:OpenSansHebrew">
-                 <div style="color:#50cbfd;text-align:right">בדיקות ${tests}</div>
+                 <div style="color:#50cbfd;text-align:right">בדיקות ${getCommaFormatedString(
+                   tests
+                 )}</div>
                  <div style="color:#1c7d7e;text-align:right">מאומתים ${(
                    (identified / tests) *
                    100
@@ -173,20 +167,10 @@ export function getWeeklyTestsConfigObject(
     },
   };
 
-  function labelsFormatter(this): string {
-    const value = this.value ?? this.y;
-    const arr = [...value.toString(10)];
-    const index = arr.length - 3;
-    if (index > 0) {
-      arr.splice(index, 0, ',');
-      return arr.join('');
-    }
-    return arr.join('');
-  }
-
   function getIdentifiedRatio(dataIndex: number): string {
     return (
-      (chartData.yAxisData[1][dataIndex] / chartData.yAxisData[0][dataIndex]) *
+      (chartConfigObj.yAxisData[1][dataIndex] /
+        chartConfigObj.yAxisData[0][dataIndex]) *
       100
     ).toFixed(1);
   }

@@ -1,4 +1,4 @@
-import { AreasplineChartData } from 'src/app/shared/models/areasplineChartData.model';
+import { ChartConfigObjData } from 'src/app/shared/models/chartConfigObjData.model';
 import { ConnectionService } from 'src/app/shared/services/connection.service';
 import { StatisticsService } from 'src/app/shared/services/statistics.service';
 import { DropDownListItem } from './../../shared/models/dropDownListItem.model';
@@ -11,7 +11,7 @@ import {
 import { ConnectionConfig } from 'src/app/shared/models/connectionConfig.model';
 import { StatisticsDataType } from 'src/app/shared/models/statisticsDataType';
 import { RespiratoryAndSickSerious } from 'src/app/shared/models/statisticsDataModels/respiratoryAndSickSerious.model';
-import { getRespiratoryAndSickSeriousConfigObject } from 'src/app/shared/highChart configuration object factories/respiratoryAndSickSeriousConfigFactory';
+import { getRespiratorySickChartConfigObjFactory } from 'src/app/shared/highChart configuration object factories/respiratorySickChartConfigObjFactory';
 
 declare const Highcharts: any;
 
@@ -110,11 +110,11 @@ export class RespiratorySickSeriousComponent implements OnInit, AfterViewInit {
     const chartData = this.createChartDataObject();
     Highcharts.chart(
       this.chartContainerId,
-      getRespiratoryAndSickSeriousConfigObject(chartData)
+      getRespiratorySickChartConfigObjFactory(chartData)
     );
   }
 
-  private createChartDataObject(): AreasplineChartData {
+  private createChartDataObject(): ChartConfigObjData {
     const xAxisTitle = 'תאריך';
     const yAxisTitle = 'מספר מקרים';
     const tooltipTitle = ['חולים קשה', 'מונשמים'];

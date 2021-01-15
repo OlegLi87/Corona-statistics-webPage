@@ -1,11 +1,11 @@
-import { AreasplineChartData } from 'src/app/shared/models/areasplineChartData.model';
+import { ChartConfigObjData } from 'src/app/shared/models/chartConfigObjData.model';
 import { IdentifiedChangeTrend } from './../../shared/models/statisticsDataModels/identifiedChangeTrend.model';
 import { StatisticsService } from './../../shared/services/statistics.service';
 import { ConnectionService } from './../../shared/services/connection.service';
 import { Component, OnInit } from '@angular/core';
 import { ConnectionConfig } from 'src/app/shared/models/connectionConfig.model';
 import { StatisticsDataType } from 'src/app/shared/models/statisticsDataType';
-import { getIdentifiedChangeTrendAreasplineConfigObject } from 'src/app/shared/highChart configuration object factories/identifiedChangeTrendConfigFactory';
+import { getChangeTrendChartConfigObjFactory } from 'src/app/shared/highChart configuration object factories/changeTrendChartConfigObjFactory';
 
 declare const Highcharts: any;
 
@@ -42,13 +42,13 @@ export class IdentifiedChangeTrendChartComponent implements OnInit {
 
     Highcharts.chart(
       this.chartContainerId,
-      getIdentifiedChangeTrendAreasplineConfigObject(chartData)
+      getChangeTrendChartConfigObjFactory(chartData)
     );
   }
 
   private createChartDataObject(
     data: Array<IdentifiedChangeTrend>
-  ): AreasplineChartData {
+  ): ChartConfigObjData {
     const xAxisTitle = null;
     const yAxisTitle = 'אחוז שינוי יומי';
     const tooltipTitle = null;

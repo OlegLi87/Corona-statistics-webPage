@@ -1,4 +1,4 @@
-import { AreasplineChartData } from 'src/app/shared/models/areasplineChartData.model';
+import { ChartConfigObjData } from 'src/app/shared/models/chartConfigObjData.model';
 import { StatisticsService } from './../../shared/services/statistics.service';
 import { ConnectionService } from 'src/app/shared/services/connection.service';
 import { DropDownListItem } from './../../shared/models/dropDownListItem.model';
@@ -11,7 +11,7 @@ import {
 import { ConnectionConfig } from 'src/app/shared/models/connectionConfig.model';
 import { StatisticsDataType } from 'src/app/shared/models/statisticsDataType';
 import { EpidemicCurve } from 'src/app/shared/models/statisticsDataModels/epidemicCurve.model';
-import { getEpidemicCurveConfigObject } from 'src/app/shared/highChart configuration object factories/epidemicCurveConfigFactory';
+import { getEpidemicCurveChartConfigObjFactory } from 'src/app/shared/highChart configuration object factories/epidemicCurveChartConfigObjFactory';
 
 declare const Highcharts: any;
 
@@ -91,11 +91,11 @@ export class EpidemicalCurveComponent implements OnInit, AfterViewInit {
     const chartData = this.createChartDataObject();
     Highcharts.chart(
       this.chartContainerId,
-      getEpidemicCurveConfigObject(chartData)
+      getEpidemicCurveChartConfigObjFactory(chartData)
     );
   }
 
-  private createChartDataObject(): AreasplineChartData {
+  private createChartDataObject(): ChartConfigObjData {
     const xAxisTitle = 'תאריך בדיקה';
     const yAxisTitle = 'מספר מקרים מצטבר';
     const tooltipTitle = ['מאומתים מצטבר', 'מחלימים חדשים', 'מאומתים חדשים'];

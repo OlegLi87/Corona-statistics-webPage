@@ -4,8 +4,8 @@ import { ConnectionService } from './../../shared/services/connection.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { ConnectionConfig } from 'src/app/shared/models/connectionConfig.model';
 import { StatisticsDataType } from 'src/app/shared/models/statisticsDataType';
-import { getCrosshairAreasplineConfigObject } from '../../shared/highChart configuration object factories/crosshairAreasplineConfigFactory';
-import { AreasplineChartData } from '../../shared/models/areasplineChartData.model';
+import { getDailyStatChartConfigObj } from '../../shared/highChart configuration object factories/dailyStatChartConfigObjFactory';
+import { ChartConfigObjData } from '../../shared/models/chartConfigObjData.model';
 
 declare const Highcharts: any;
 
@@ -70,11 +70,11 @@ export class AreasplineChartComponent implements OnInit {
     let chartData = this.createChartDataObject();
     Highcharts.chart(
       this.chartContainerID,
-      getCrosshairAreasplineConfigObject(chartData)
+      getDailyStatChartConfigObj(chartData)
     );
   }
 
-  private createChartDataObject(): AreasplineChartData {
+  private createChartDataObject(): ChartConfigObjData {
     const xAxisTitle = 'תאריך';
     let tooltipTitle = new Array<string>();
     let yAxisTitle: string;

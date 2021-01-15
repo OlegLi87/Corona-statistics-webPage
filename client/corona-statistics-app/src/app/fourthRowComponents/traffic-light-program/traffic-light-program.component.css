@@ -1,5 +1,6 @@
 .mainContainer {
   display: block;
+  display: relative;
 }
 
 .leftSideContent {
@@ -44,6 +45,33 @@ input {
 
 input:focus {
   outline: none;
+}
+
+.citiesList {
+  position: absolute;
+  top: 1.3rem;
+  left: 2rem;
+  z-index: 100;
+  list-style: none;
+  font-size: 0.9375rem;
+  width: 10.5rem;
+  max-height: 17rem;
+  padding: 0;
+  overflow-y: auto;
+  border-radius: 5px;
+  border: thin solid #e7ecf4;
+}
+
+.citiesList li {
+  margin: 0;
+  padding: 0.61rem 1rem;
+  background-color: #ffff;
+}
+
+.citiesList li:hover {
+  background-color: #edeff3;
+  cursor: pointer;
+  transition-duration: 0.3s;
 }
 
 .middleRow {
@@ -210,14 +238,4 @@ td.darker {
   align-items: center;
   margin: auto;
   text-decoration: underline;
-}
-
-::-webkit-scrollbar {
-  width: 0.4rem;
-  height: 0;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #969696;
 }

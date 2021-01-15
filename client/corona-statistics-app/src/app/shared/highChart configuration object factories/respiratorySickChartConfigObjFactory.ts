@@ -1,11 +1,16 @@
-import { AreasplineChartData } from 'src/app/shared/models/areasplineChartData.model';
+import { ChartConfigObjData } from 'src/app/shared/models/chartConfigObjData.model';
+import {
+  crosshairLblConfigObj,
+  getCommaFormatedString,
+  getXAxisLabelsStep,
+  toolTipConfigObj,
+} from './utils';
 
-export function getRespiratoryAndSickSeriousConfigObject(
-  chartData: AreasplineChartData
+export function getRespiratorySickChartConfigObjFactory(
+  chartConfigObj: ChartConfigObjData
 ): any {
   return {
     chart: {
-      type: 'line',
       style: {
         fontFamily: 'OpenSansHebrewLight',
         fontWeight: 900,
@@ -20,26 +25,30 @@ export function getRespiratoryAndSickSeriousConfigObject(
     },
     xAxis: {
       title: {
-        text: chartData.xAxisTitle ?? '',
+        text: chartConfigObj.xAxisTitle ?? '',
         style: {
           fontSize: '0.9rem',
         },
       },
-      categories: chartData.xAxisCategories,
+      categories: chartConfigObj.xAxisCategories,
       lineWidth: 0,
       left: 70,
       crosshair: {
         width: 1.5,
         color: '#d0d1d6',
         zIndex: 10,
+        label: {
+          ...crosshairLblConfigObj,
+          formatter(val) {
+            return chartConfigObj.xAxisCategories[val];
+          },
+        },
       },
-      tickInterval: (function foo() {
-        return Math.floor(chartData.xAxisCategories.length * 0.2);
-      })(),
+      tickInterval: getXAxisLabelsStep(chartConfigObj.xAxisCategories),
     },
     yAxis: {
       title: {
-        text: chartData.yAxisTitle ?? '',
+        text: chartConfigObj.yAxisTitle ?? '',
       },
       gridLineWidth: 1.5,
       crosshair: {
@@ -48,6 +57,10 @@ export function getRespiratoryAndSickSeriousConfigObject(
         dashStyle: 'Dash',
         snap: false,
         zIndex: 10,
+        label: {
+          ...crosshairLblConfigObj,
+          formatter: getCommaFormatedString,
+        },
       },
     },
     plotOptions: {
@@ -97,28 +110,21 @@ export function getRespiratoryAndSickSeriousConfigObject(
       enabled: false,
     },
     tooltip: {
+      ...toolTipConfigObj,
       shared: true,
-      backgroundColor: '#ffff',
-      borderColor: '#ffff',
-      borderRadius: 1,
-      borderWidth: 10,
-      hideDelay: 1,
-      distance: 20,
-      shadow: {
-        color: 'rgba(173,173,173,0.8)',
-        width: 18,
-      },
-      padding: 2,
-      useHTML: true,
       formatter(this, options) {
         const series = options.chart.series;
         let markerIndex = series[0].data.findIndex((d) => d.state === 'hover');
-        const sickData = chartData.yAxisData[0][markerIndex];
-        const respData = chartData.yAxisData[1][markerIndex];
+        const sickData = chartConfigObj.yAxisData[0][markerIndex];
+        const respData = chartConfigObj.yAxisData[1][markerIndex];
         const resString = `
              <div style="font-size:0.85rem;font-family:OpenSansHebrew">
-               <div style="color:#b6ca51;text-align:right"> חולים קשה ${sickData}</div>
-               <div style="color:#50cbfd;text-align:right">מונשמים ${respData}</div>
+               <div style="color:#b6ca51;text-align:right"> חולים קשה ${getCommaFormatedString(
+                 sickData
+               )}</div>
+               <div style="color:#50cbfd;text-align:right">מונשמים ${getCommaFormatedString(
+                 respData
+               )}</div>
              </div> 
         `;
         return resString;
@@ -127,7 +133,7 @@ export function getRespiratoryAndSickSeriousConfigObject(
     series: [
       {
         name: '',
-        data: chartData.yAxisData[0],
+        data: chartConfigObj.yAxisData[0],
         color: '#b6ca51',
         lineWidth: 1,
         states: {
@@ -140,7 +146,7 @@ export function getRespiratoryAndSickSeriousConfigObject(
       },
       {
         name: '',
-        data: chartData.yAxisData[1],
+        data: chartConfigObj.yAxisData[1],
         color: '#50cbfd',
         lineWidth: 1,
         marker: {

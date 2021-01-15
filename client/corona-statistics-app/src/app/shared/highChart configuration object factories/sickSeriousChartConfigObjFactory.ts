@@ -1,9 +1,8 @@
-import { AreasplineChartData } from 'src/app/shared/models/areasplineChartData.model';
+import { ChartConfigObjData } from '../models/chartConfigObjData.model';
 
-export function getIdentifiedChangeTrendAreasplineConfigObject(
-  chartData: AreasplineChartData
+export function getSickSeriousChartConfigObjFactory(
+  chartConfigObj: ChartConfigObjData
 ): any {
-  let counter = 0;
   return {
     chart: {
       type: 'area',
@@ -12,47 +11,42 @@ export function getIdentifiedChangeTrendAreasplineConfigObject(
         fontWeight: 900,
       },
       spacingBottom: 30,
-      spacingTop: 30,
-      spacingRight: -15,
-      spacingLeft: 0,
+      spacingTop: 20,
+      spacingRight: 30,
+      spacingLeft: 35,
     },
     title: {
       text: '',
     },
     xAxis: {
       title: {
-        text: chartData.xAxisTitle ?? '',
+        text: chartConfigObj.xAxisTitle ?? '',
       },
-      categories: chartData.xAxisCategories,
+      categories: chartConfigObj.xAxisCategories,
       lineWidth: 0,
-      left: 40,
+      left: 60,
     },
     yAxis: {
       title: {
-        text: chartData.yAxisTitle ?? '',
+        text: chartConfigObj.yAxisTitle ?? '',
       },
       gridLineWidth: 0,
-      labels: {
-        formatter(this, option) {
-          return this.value + '%';
-        },
-      },
     },
     plotOptions: {
       area: {
         fillColor: {
           linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
           stops: [
-            [0, 'rgba(147,230,254,1)'],
-            [0.25, 'rgba(150,237,255,1)'],
-            [0.5, 'rgba(207,241,254,1)'],
-            [0.75, 'rgba(221,244,254,1)'],
-            [1, 'rgba(254,255,255,1)'],
+            [0, 'rgba(104,168,169,1)'],
+            [0.25, 'rgba(136,187,187,1)'],
+            [0.5, 'rgba(163,203,203,1)'],
+            [0.75, 'rgba(184,215,215,1)'],
+            [1, 'rgba(240,247,247,1)'],
           ],
         },
         marker: {
           fillColor: '#ffff',
-          lineColor: 'rgba(82,203,253,1)',
+          lineColor: 'rgba(62,144,145,1)',
           lineWidth: 2.5,
           radius: 2.5,
           states: {
@@ -75,9 +69,9 @@ export function getIdentifiedChangeTrendAreasplineConfigObject(
     series: [
       {
         name: '',
-        data: chartData.yAxisData[1],
-        color: 'rgba(82,203,253,0.9)',
-        lineWidth: 2.3,
+        data: chartConfigObj.yAxisData[0],
+        color: 'rgba(43,133,134,0.9)',
+        lineWidth: 1,
         cursor: 'pointer',
         states: {
           hover: {
@@ -85,19 +79,12 @@ export function getIdentifiedChangeTrendAreasplineConfigObject(
           },
         },
         dataLabels: {
-          formatter(this, options) {
-            return `<span style="font-size:0.8rem;font-weight:900;color:#30364b;position:relative;top:4px">${
-              this.y
-            }%</span> <br> (${chartData.yAxisData[0][counter++]})`;
-          },
-          useHTML: true,
           enabled: true,
           color: 'rgba(120,124,138,1)',
           style: {
             fontSize: '12px',
           },
-          y: -6,
-          x: 2,
+          y: -4,
           crop: false,
           overflow: true,
         },
