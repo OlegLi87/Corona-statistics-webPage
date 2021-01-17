@@ -1,3 +1,4 @@
+import { LocaleDateFormatPipe } from './shared/pipes/localeDateFormat.pipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -24,6 +25,7 @@ import { TestsChartComponent } from './fourthRowComponents/tests-chart/tests-cha
     PercentageValuePipe,
     PlusMinusSignPipe,
     CommaPipe,
+    LocaleDateFormatPipe,
     DailyStatisticsComponent,
     AreasplineChartComponent,
     IdentifiedChangeTrendChartComponent,

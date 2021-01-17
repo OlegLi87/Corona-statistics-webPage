@@ -1,3 +1,5 @@
+import { StatisticsService } from 'src/app/shared/services/statistics.service';
+import { ConnectionService } from './../../shared/services/connection.service';
 import { Component, HostListener, OnInit } from '@angular/core';
 
 interface ColumnHeader {
@@ -21,6 +23,7 @@ interface StatData {
   styleUrls: ['./traffic-light-program.component.css'],
 })
 export class TrafficLightProgramComponent implements OnInit {
+  latestTimeUpdated: Date;
   statData = new Array<StatData>();
   statDataToDisplay = new Array<StatData>();
   headerColumns = new Array<ColumnHeader>();
@@ -31,9 +34,15 @@ export class TrafficLightProgramComponent implements OnInit {
     this.latestClickedElement = e.target as HTMLElement;
   }
 
-  constructor() {}
+  constructor(
+    private connectionService: ConnectionService,
+    private statisticsService: StatisticsService
+  ) {}
 
   ngOnInit(): void {
+    this.statisticsService.latestUpdateTimeDataUpdated.subscribe((data) => {
+      this.latestTimeUpdated = data;
+    });
     this.createDummyData();
     this.statDataToDisplay = this.statData;
     this.populateHeaderColumns();

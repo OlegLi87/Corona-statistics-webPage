@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.statisticsService.latestUpdateTimeDataUpdated.subscribe((data) => {
-      this.latestUpdateTime = data.date;
+      this.latestUpdateTime = data;
     });
 
     this.connectionService.fetchStatisticsData(this.connectionConfig);

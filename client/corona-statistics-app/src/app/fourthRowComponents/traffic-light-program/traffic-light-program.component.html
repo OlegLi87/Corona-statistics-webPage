@@ -5,7 +5,10 @@
       <div class="leftSideContent">
         <div class="infoRow">
           <span class="info-icon">i</span>
-          <span> הנתונים נכונים לתאריך {{ "46464" }}</span>
+          <span *ngIf="latestTimeUpdated">
+            הנתונים נכונים לתאריך
+            {{ latestTimeUpdated | localeDateFormat }}</span
+          >
         </div>
         <div class="div inputContainer">
           <span class="inputIcon"></span>
