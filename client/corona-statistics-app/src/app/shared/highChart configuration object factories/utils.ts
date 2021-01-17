@@ -8,7 +8,7 @@ export function getCommaFormatedString(n = 0): string {
 }
 
 export function getXAxisLabelsStep(xAxisCategories: Array<any>) {
-  const STEP_RATIO = 0.15;
+  const STEP_RATIO = 0.19;
 
   if (xAxisCategories.length <= 10) return 1;
   return Math.trunc(xAxisCategories.length * STEP_RATIO);

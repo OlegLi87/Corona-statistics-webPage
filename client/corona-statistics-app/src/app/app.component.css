@@ -113,11 +113,14 @@ header {
 
 .data-row {
   display: flex;
-  height: 20.25rem;
   margin-bottom: 1.3rem;
 }
 
-.data-row.second {
+.data-row:not(.second) > div {
+  height: 21.75rem;
+}
+
+.data-row.second > div {
   height: 18.75rem;
 }
 
@@ -151,4 +154,123 @@ header {
 
 .data-row.fourth .left {
   flex: 1 0 auto;
+}
+
+@media (max-width: 87.5rem) {
+  .data-container {
+    padding-bottom: 0;
+    padding-right: 1.8rem;
+    padding-left: 1.8rem;
+  }
+
+  .data-row:not(.second) {
+    flex-wrap: wrap;
+    height: fit-content;
+  }
+
+  .inRow-container.right {
+    flex: 0 0 100% !important;
+    margin-left: 0;
+  }
+
+  .data-row:not(.fourth) .inRow-container.left {
+    flex: 0 0 100%;
+    margin-top: 1.25rem;
+  }
+
+  .data-row.fourth .inRow-container.left {
+    margin-top: 1.3rem;
+    flex: 0 1 50%;
+  }
+}
+
+@media (max-width: 61.85rem) {
+  header {
+    height: 8.25rem;
+  }
+
+  .header-placeHolder {
+    height: 8.25rem;
+  }
+
+  .header-container {
+    align-items: baseline;
+    padding-top: 0.5rem;
+  }
+
+  .title-container {
+    text-align: right;
+    top: 5.35rem;
+    right: 1rem;
+  }
+
+  .title-container a {
+    font-size: 0.8125rem;
+  }
+
+  .title-container .subtitle {
+    text-align: right;
+    font-size: 0.625rem;
+  }
+
+  .left-container {
+    position: absolute;
+    top: 5.5rem;
+    left: 0.6rem;
+  }
+
+  .data-container {
+    padding-right: 0.8rem;
+    padding-left: 0.8rem;
+    padding-top: 1rem;
+  }
+
+  .data-row.fourth .inRow-container.left {
+    flex: 0 0 100%;
+  }
+}
+
+@media (max-width: 53.25rem) {
+  .spreadness-indices {
+    height: fit-content;
+  }
+
+  .data-row.second {
+    flex-wrap: wrap;
+  }
+
+  .data-row.second > div:not(:last-of-type) {
+    flex: 1 0 100%;
+    border: none;
+    border-bottom: thin solid #d8d8d9;
+  }
+}
+
+@media (max-width: 23.56rem) {
+  .logo {
+    width: 15rem;
+    height: 3rem;
+  }
+
+  .title-container {
+    top: 4rem;
+  }
+
+  .left-container {
+    width: fit-content;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    margin-left: 0.5rem;
+  }
+
+  .left-container span {
+    font-size: 0.625rem;
+  }
+}
+
+@media (max-width: 20.93rem) {
+  .data-container {
+    padding-left: 0.1rem;
+    padding-right: 0.5rem;
+  }
 }

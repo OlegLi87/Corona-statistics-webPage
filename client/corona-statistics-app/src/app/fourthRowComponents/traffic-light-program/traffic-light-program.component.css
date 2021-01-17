@@ -75,6 +75,7 @@ input:focus {
 }
 
 .middleRow {
+  display: inline-block;
   font-size: 0.75rem;
   margin-top: 0.3rem;
 }
@@ -90,6 +91,7 @@ input:focus {
 
 .section {
   display: flex;
+  font-size: 0.9rem;
   margin-left: 1.1rem;
 }
 
@@ -117,14 +119,12 @@ input:focus {
 }
 
 .lowerRow p:not(.italic) {
-  font-size: 0.9rem;
   font-family: OpenSansHebrewRegular;
   position: relative;
   bottom: 0.14rem;
 }
 
 .lowerRow .italic {
-  font-size: 0.9rem;
   font-style: italic;
   font-family: OpenSansHebrewLight;
   font-weight: 400;
@@ -133,7 +133,7 @@ input:focus {
 }
 
 .tableContainer {
-  height: 12.25rem;
+  height: 13.6rem;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   overflow: scroll;
@@ -238,4 +238,222 @@ td.darker {
   align-items: center;
   margin: auto;
   text-decoration: underline;
+}
+
+@media (max-width: 74.4375rem) {
+  .section {
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 70rem) {
+  .tableContainer {
+    height: 13.7rem;
+  }
+  .section {
+    align-items: center;
+  }
+}
+
+@media (max-width: 68.75rem) {
+  .middleRow {
+    max-width: 12.5rem;
+  }
+
+  .tableContainer {
+    height: 12.8rem;
+  }
+}
+
+@media (max-width: 64.68rem) {
+  .middleRow {
+    max-width: 11.25rem;
+  }
+}
+
+@media (max-width: 61.85rem) {
+  .middleRow {
+    max-width: fit-content;
+  }
+  .tableContainer {
+    height: 13.8rem;
+  }
+}
+
+@media (max-width: 48.2rem) {
+  .tableContainer {
+    height: 12.2rem;
+  }
+
+  .middleRow {
+    display: block;
+    max-width: 11.875rem;
+  }
+}
+
+@media (max-width: 42.18rem) {
+  .middleRow {
+    display: block;
+    max-width: 9.375rem;
+  }
+}
+
+@media (max-width: 40.312rem) {
+  .tableContainer {
+    height: 11.55rem;
+  }
+
+  .middleRow {
+    display: block;
+    max-width: 6.875rem;
+  }
+}
+
+@media (max-width: 38.75rem) {
+  .header {
+    padding-top: 2rem;
+  }
+
+  .upperRow {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+  }
+
+  .leftSideContent {
+    flex-direction: column;
+    margin-top: 0.15rem;
+    align-items: baseline;
+  }
+
+  .infoRow {
+    margin-bottom: 0.3rem;
+    border-radius: 2px;
+  }
+
+  .middleRow {
+    font-size: 0.625rem;
+    max-width: fit-content;
+    position: absolute;
+    bottom: 4rem;
+  }
+
+  .lowerRow {
+    flex-direction: column;
+    width: fit-content;
+    position: absolute;
+    top: 0.25rem;
+    left: 0;
+  }
+
+  .section {
+    margin-bottom: 0.7rem;
+  }
+
+  .section .square {
+    width: 1.625rem;
+    height: 1.625rem;
+  }
+
+  .tableContainer {
+    margin-top: 2.5rem;
+    height: 10.55rem;
+  }
+
+  table {
+    font-size: 0.6875rem;
+  }
+}
+
+@media (max-width: 30rem) {
+  ::placeholder {
+    font-size: 0.7rem;
+  }
+
+  .infoRow {
+    font-size: 0.625rem;
+  }
+
+  input {
+    width: 140px;
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 26.87rem) {
+  .section {
+    font-size: 0.625rem;
+  }
+}
+
+@media (max-width: 27.5rem) {
+  .header {
+    padding-top: 0.5rem;
+  }
+  .section {
+    font-size: 0.562rem;
+    margin-top: 0rem;
+  }
+
+  .section .square {
+    width: 1.375rem;
+    height: 1.375rem;
+  }
+
+  .tableContainer {
+    height: 12.3rem;
+  }
+}
+
+@media (max-width: 24.68rem) {
+  .header {
+    padding-right: 0.5rem;
+  }
+
+  .leftSideContent {
+    top: 1.5rem;
+  }
+
+  .middleRow {
+    max-width: 9.375rem;
+    top: 1.8rem;
+  }
+
+  input {
+    width: 6.25rem;
+  }
+}
+
+@media (max-width: 20.93rem) {
+  .header {
+    padding-top: 1rem;
+  }
+
+  .middleRow {
+    top: 2.3rem;
+  }
+
+  .lowerRow {
+    left: -0.7rem;
+    top: 1rem;
+  }
+  .section {
+    font-size: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .tableContainer {
+    height: 13.05rem;
+    margin-top: 1.3rem;
+  }
+}
+
+@media (max-width: 18.25rem) {
+  .infoRow {
+    font-size: 0.5rem;
+  }
+
+  input {
+    width: 4.375rem;
+  }
 }

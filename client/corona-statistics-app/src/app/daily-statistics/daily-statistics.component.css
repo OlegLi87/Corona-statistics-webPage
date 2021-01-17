@@ -207,3 +207,85 @@
 .active-icon {
   background-color: black;
 }
+
+@media (max-width: 87.5rem) {
+  .container {
+    flex-wrap: wrap;
+  }
+
+  .data {
+    flex: 0 0 32.3%;
+    margin-left: 0 !important;
+  }
+
+  .data:nth-child(1) {
+    margin-bottom: 1.3rem;
+  }
+}
+
+@media (max-width: 68.75rem) {
+  .chart.respiratory {
+    right: 5rem;
+  }
+}
+
+@media (max-width: 61.85rem) {
+  .data {
+    flex: 0 0 48.7%;
+  }
+
+  .data:nth-child(1),
+  .data:nth-child(3) {
+    margin-bottom: 1.3rem;
+  }
+
+  .chart.respiratory {
+    right: auto;
+    left: 7.1rem;
+  }
+}
+
+@media (max-width: 45.62rem) {
+  .chart.deathsOverall {
+    right: 0rem;
+  }
+}
+
+@media (max-width: 34.25rem) {
+  .chart.respiratory,
+  .chart.tests {
+    left: 0 !important;
+  }
+}
+
+@media (max-width: 26.85rem) {
+  .chart {
+    width: 95vw;
+  }
+}
+
+@media (max-width: 25rem) {
+  .data .info {
+    margin-left: 0.5rem;
+  }
+
+  .data span,
+  .data p,
+  .info-value {
+    font-size: 0.6875rem;
+  }
+}
+
+@media (max-width: 18.75rem) {
+  .data .additional-data {
+    margin-top: 0.5rem;
+  }
+
+  .data h6 {
+    font-size: 0.8rem;
+  }
+
+  .data h5 {
+    font-size: 1rem;
+  }
+}

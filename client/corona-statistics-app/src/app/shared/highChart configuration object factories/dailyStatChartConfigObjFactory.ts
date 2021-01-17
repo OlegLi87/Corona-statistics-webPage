@@ -14,8 +14,8 @@ export function getDailyStatChartConfigObj(
       type: 'areaspline',
       marginBottom: 47,
       marginLeft: 60,
-      marginRight: -20,
-      spacing: [20, 10, 15, 10],
+      marginRight: -40,
+      spacing: [20, -5, 15, 10],
     },
     title: {
       text: null,

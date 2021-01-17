@@ -171,7 +171,7 @@ span {
 
 .inRow-container .lightBulb {
   display: inline-block;
-  width: 0.9rem;
+  min-width: 0.9rem;
   height: 0.9rem;
   background-image: url("./assets/images/lightBulb.png");
   background-size: cover;
@@ -200,7 +200,7 @@ span {
 }
 
 .inRow-container .legend .circle {
-  width: 0.625rem;
+  min-width: 0.625rem;
   height: 0.625rem;
   border-radius: 50%;
   margin-left: 0.15rem;
@@ -223,4 +223,23 @@ body::-webkit-scrollbar-thumb,
 .tableContainer::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #969696;
+}
+
+@media (max-width: 25rem) {
+  .inRow-container .header {
+    padding: 1rem 0.8rem;
+  }
+}
+
+@media (max-width: 21.875rem) {
+  .inRow-container {
+    padding: 0 0.2rem !important;
+  }
+  .inRow-container .header {
+    padding-left: 0.2rem !important;
+  }
+
+  .inRow-container .dropDown {
+    white-space: nowrap;
+  }
 }

@@ -215,7 +215,7 @@
       <span>מגמת שינוי יומית</span>
     </button>
     <app-areaspline-chart
-      class="chart"
+      class="chart respiratory"
       *ngIf="activeButton === buttonRespiratory"
       [statisticsDataType]="getStatisticsDataType('respiratory')"
     ></app-areaspline-chart>
@@ -264,7 +264,7 @@
       <span>מגמת שינוי יומית</span>
     </button>
     <app-areaspline-chart
-      class="chart"
+      class="chart deathsOverall"
       *ngIf="activeButton === buttonDeaths"
       [statisticsDataType]="getStatisticsDataType('deaths')"
     ></app-areaspline-chart>
@@ -317,7 +317,7 @@
       <span>בדיקות יומיות</span>
     </button>
     <app-areaspline-chart
-      class="chart"
+      class="chart tests"
       *ngIf="activeButton === buttonTests"
       [statisticsDataType]="getStatisticsDataType('tests')"
     ></app-areaspline-chart>
