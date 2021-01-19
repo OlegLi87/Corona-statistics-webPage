@@ -12,6 +12,7 @@ import { ConnectionService } from '../shared/services/connection.service';
 import { StatisticsService } from '../shared/services/statistics.service';
 import { ConnectionConfig } from '../shared/models/connectionConfig.model';
 import { StatisticsDataType } from '../shared/models/statisticsDataType';
+import { errorHandler } from '../shared/utils';
 
 declare const SVG: any;
 
@@ -59,9 +60,14 @@ export class DailyStatisticsComponent implements OnInit, AfterViewInit {
       .fetchFieldSum('identified')
       .subscribe((data) => (this.identifiedOverall = data.overallSum));
 
-    this.connectionService.fetchFieldSum('deaths').subscribe((data) => {
-      this.deathsOverall = data.overallSum;
-    });
+    this.connectionService.fetchFieldSum('deaths').subscribe(
+      (data) => {
+        this.deathsOverall = data.overallSum;
+      },
+      (error) => {
+        errorHandler(error, this.connectionConfig.statisticsDataType);
+      }
+    );
 
     this.statisticsService.dailyStatisticsDataUpdated.subscribe(
       (data) => (this.dailyStatistics = data)

@@ -1,6 +1,8 @@
+import { StatisticsDataType } from 'src/app/shared/models/statisticsDataType';
 import { StatisticsService } from 'src/app/shared/services/statistics.service';
 import { ConnectionService } from './../../shared/services/connection.service';
 import { Component, HostListener, OnInit } from '@angular/core';
+import { errorHandler } from 'src/app/shared/utils';
 
 interface ColumnHeader {
   name: string;
@@ -8,13 +10,13 @@ interface ColumnHeader {
   sortingField: string;
 }
 
-interface StatData {
+export interface CityBasedStatData {
   city: string;
   grade: number;
-  newSick: number;
+  sickNew: number;
   positiveTests: number;
-  identifiedChange: number;
-  activeSick: number;
+  identifiedChangeRate: number;
+  sickActive: number;
 }
 
 @Component({
@@ -24,8 +26,8 @@ interface StatData {
 })
 export class TrafficLightProgramComponent implements OnInit {
   latestTimeUpdated: Date;
-  statData = new Array<StatData>();
-  statDataToDisplay = new Array<StatData>();
+  statData: Array<CityBasedStatData>;
+  statDataToDisplay: Array<CityBasedStatData>;
   headerColumns = new Array<ColumnHeader>();
   latestClickedElement: HTMLElement;
 
@@ -43,9 +45,17 @@ export class TrafficLightProgramComponent implements OnInit {
     this.statisticsService.latestUpdateTimeDataUpdated.subscribe((data) => {
       this.latestTimeUpdated = data;
     });
-    this.createDummyData();
-    this.statDataToDisplay = this.statData;
-    this.populateHeaderColumns();
+
+    this.connectionService.fetchCityBasedStatisticsData().subscribe(
+      (data) => {
+        this.statData = data;
+        this.statDataToDisplay = this.statData;
+        this.populateHeaderColumns();
+      },
+      (error) => {
+        errorHandler(error, StatisticsDataType.CityBasedStatistics);
+      }
+    );
   }
 
   getSquareColorClass(grade: number): string {
@@ -121,7 +131,14 @@ export class TrafficLightProgramComponent implements OnInit {
       'שיעור שינוי מאומתים *',
       'חולים פעילים',
     ];
-    const statDataKeys = Object.keys(this.statData[0]);
+    const statDataKeys = [
+      'city',
+      'grade',
+      'sickNew',
+      'positiveTests',
+      'identifiedChangeRate',
+      'sickActive',
+    ];
 
     for (let i = 0; i < headerNames.length; i++) {
       const name = headerNames[i];
@@ -133,34 +150,34 @@ export class TrafficLightProgramComponent implements OnInit {
     this.sortTable(this.headerColumns.find((h) => h.sortingField === 'grade'));
   }
 
-  private createDummyData(): void {
-    for (let i = 0; i < 100; i++) {
-      const city = this.getRandomWord(this.getRandomNumber(4, 11));
-      const grade = this.getRandomNumber(3, 10);
-      const newSick = this.getRandomNumber(10, 350);
-      const positiveTests = this.getRandomNumber(8, 60);
-      const identifiedChange = this.getRandomNumber(5, 70);
-      const activeSick = this.getRandomNumber(50, 2500);
-      this.statData.push({
-        city,
-        grade,
-        newSick,
-        positiveTests,
-        identifiedChange,
-        activeSick,
-      });
-    }
-  }
+  // private createDummyData(): void {
+  //   for (let i = 0; i < 100; i++) {
+  //     const city = this.getRandomWord(this.getRandomNumber(4, 11));
+  //     const grade = this.getRandomNumber(3, 10);
+  //     const newSick = this.getRandomNumber(10, 350);
+  //     const positiveTests = this.getRandomNumber(8, 60);
+  //     const identifiedChange = this.getRandomNumber(5, 70);
+  //     const activeSick = this.getRandomNumber(50, 2500);
+  //     this.statData.push({
+  //       city,
+  //       grade,
+  //       newSick,
+  //       positiveTests,
+  //       identifiedChange,
+  //       activeSick,
+  //     });
+  //   }
+  // }
 
-  private getRandomNumber(from: number, to: number): number {
-    return from + Math.floor(Math.random() * (to + 1 - from));
-  }
+  // private getRandomNumber(from: number, to: number): number {
+  //   return from + Math.floor(Math.random() * (to + 1 - from));
+  // }
 
-  private getRandomWord(numOfLetters): string {
-    const arr = [];
-    for (let i = 0; i < numOfLetters; i++) {
-      arr.push(this.getRandomNumber(1488, 1514));
-    }
-    return String.fromCharCode(...arr);
-  }
+  // private getRandomWord(numOfLetters): string {
+  //   const arr = [];
+  //   for (let i = 0; i < numOfLetters; i++) {
+  //     arr.push(this.getRandomNumber(1488, 1514));
+  //   }
+  //   return String.fromCharCode(...arr);
+  // }
 }

@@ -11,7 +11,7 @@ function createPojectionObject(queryObject) {
 }
 
 const sendJsonResponse = (res, data) => {
-  if (data) return res.status(200).json(data);
+  if ((!Array.isArray(data) && data) || (data && data.length > 0)) return res.status(200).json(data);
   res.status(404).json({ message: 'no data was found' });
 };
 

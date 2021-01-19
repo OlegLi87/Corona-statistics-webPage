@@ -10,4 +10,5 @@ export enum StatisticsDataType {
   RespiratoryAndSickSerious,
   EpidemicCurve,
   WeeklyTests,
+  CityBasedStatistics,
 }

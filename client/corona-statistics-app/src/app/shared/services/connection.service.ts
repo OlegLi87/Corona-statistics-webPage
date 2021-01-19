@@ -1,9 +1,12 @@
+import { error } from 'protractor';
+import { CityBasedStatData } from './../../fourthRowComponents/traffic-light-program/traffic-light-program.component';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { StatisticsService } from './statistics.service';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { ConnectionConfig } from '../models/connectionConfig.model';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { errorHandler } from '../utils';
 
 @Injectable({ providedIn: 'root' })
 export class ConnectionService {
@@ -22,11 +25,15 @@ export class ConnectionService {
     this.http
       .get(connectionString)
       .pipe(map(this.modifyResponseData))
-      .subscribe((data) =>
-        this.statisticsService.updateStatisticsData(
-          data,
-          connectConfig.statisticsDataType
-        )
+      .subscribe(
+        (data) =>
+          this.statisticsService.updateStatisticsData(
+            data,
+            connectConfig.statisticsDataType
+          ),
+        (error) => {
+          errorHandler(error, connectConfig.statisticsDataType);
+        }
       );
   }
 
@@ -39,6 +46,12 @@ export class ConnectionService {
       limit
     );
     return this.http.get<{ overallSum: number }>(connectionString);
+  }
+
+  fetchCityBasedStatisticsData(): Observable<Array<CityBasedStatData>> {
+    return this.http.get<Array<CityBasedStatData>>(
+      this.connectionString + '/' + 'cityBasedStatistics'
+    );
   }
 
   private buildConnectionString(

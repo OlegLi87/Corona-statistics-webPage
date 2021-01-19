@@ -5,6 +5,7 @@ import { DropDownListItem } from './../../shared/models/dropDownListItem.model';
 import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
 import { drawArrow } from 'src/app/shared/svgUtils';
 import {
+  errorHandler,
   getDropDownListItems,
   getFormattedDateString,
 } from 'src/app/shared/utils';
@@ -23,7 +24,7 @@ declare const Highcharts: any;
 export class RespiratorySickSeriousComponent implements OnInit, AfterViewInit {
   dropDownListItems: Array<DropDownListItem>;
   overallRespiratory: number;
-  overSickSerious: number;
+  overallSickSerious: number;
   dropDownButtonText: string;
   showDropDownList = false;
   chartContainerId = 'respiratoryAndSickSerious';
@@ -46,13 +47,21 @@ export class RespiratorySickSeriousComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.connectionService
-      .fetchFieldSum('respiratory')
-      .subscribe((data) => (this.overallRespiratory = data.overallSum));
+    this.connectionService.fetchFieldSum('respiratory').subscribe(
+      (data) => (this.overallRespiratory = data.overallSum),
+      (error) => {
+        errorHandler(error, this.connectionConfig.statisticsDataType);
+      }
+    );
 
     const sickSerSumObs = this.connectionService
       .fetchFieldSum('sickSerious')
-      .subscribe((data) => (this.overSickSerious = data.overallSum));
+      .subscribe(
+        (data) => (this.overallSickSerious = data.overallSum),
+        (error) => {
+          errorHandler(error, this.connectionConfig.statisticsDataType);
+        }
+      );
 
     this.statisticsService.respiratoryAndSickSeriousDataUpdated.subscribe(
       (data) => {

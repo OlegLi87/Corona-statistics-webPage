@@ -4,7 +4,6 @@ import { PipeTransform } from '@angular/core';
 @Pipe({ name: 'localeDateFormat' })
 export class LocaleDateFormatPipe implements PipeTransform {
   transform(date: Date): string {
-    console.log(date.getDate());
     const day =
       date.getDate().toString().length < 2
         ? '0' + date.getDate()

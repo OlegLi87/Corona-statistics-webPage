@@ -1,3 +1,5 @@
+import { StatisticsDataType } from './models/statisticsDataType';
+import { HttpErrorResponse } from '@angular/common/http';
 import { DropDownListItem } from './models/dropDownListItem.model';
 
 export function getDropDownListItems(): Array<DropDownListItem> {
@@ -24,4 +26,13 @@ export function getDropDownListItems(): Array<DropDownListItem> {
 
 export function getFormattedDateString(date: Date): string {
   return `${date.getDate()}.${date.getMonth() + 1}`;
+}
+
+export function errorHandler(
+  error: HttpErrorResponse,
+  statisticsDataType: StatisticsDataType
+): void {
+  console.log(
+    `Couldnt fetch a data for ${StatisticsDataType[statisticsDataType]}. \nstatus : ${error.status},status message : ${error.statusText}`
+  );
 }

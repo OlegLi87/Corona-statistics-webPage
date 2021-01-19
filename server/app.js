@@ -4,6 +4,7 @@ const app = express();
 const cors = require('cors');
 
 const dailyStatisticsRouter = require('./app_api/routes/dailyStatistics');
+const cityBasedStatisticsRouter = require('./app_api/routes/cityBasedStatistics');
 const resourceNotFoundRouter = require('./app_api/routes/resourceNotFound');
 
 // connecting to a database
@@ -15,6 +16,7 @@ const PORT = parseInt(process.env.PORT, 10);
 app.use(cors());
 
 app.use('', dailyStatisticsRouter);
+app.use('', cityBasedStatisticsRouter);
 app.use('', resourceNotFoundRouter);
 
 app.listen(PORT, () => {
