@@ -208,6 +208,12 @@
   background-color: black;
 }
 
+/* rules for accesible view */
+.accessibleView div:not(.dot) {
+  background-color: #384f5f;
+  color: white;
+}
+
 @media (max-width: 87.5rem) {
   .container {
     flex-wrap: wrap;

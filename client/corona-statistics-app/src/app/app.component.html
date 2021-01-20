@@ -1,80 +1,84 @@
-<header>
-  <div class="top-border"></div>
+<div class="mainContainer" [ngClass]="{ accessibleView: isOnAccessibleView }">
+  <header>
+    <div class="top-border"></div>
 
-  <div class="header-container">
-    <div class="logo-container">
-      <div class="toggle-button">
-        <svg width="100%" height="100%" viewbox="0 0 24 24">
-          <g fill="#374f60">
-            <rect
-              width="26"
-              height="26"
-              opacity="0"
-              transform="rotate(180 12 12)"
-            ></rect>
-            <rect x="3" y="6" width="21" height="2.4" rx="3" ry="3"></rect>
-            <rect x="3" y="12" width="21" height="2.4" rx="3" ry="3"></rect>
-            <rect x="3" y="18" width="21" height="2.4" rx="3" ry="3"></rect>
-          </g>
-        </svg>
+    <div class="header-container">
+      <div class="logo-container">
+        <div class="toggle-button">
+          <svg width="100%" height="100%" viewbox="0 0 24 24">
+            <g fill="#374f60">
+              <rect
+                width="26"
+                height="26"
+                opacity="0"
+                transform="rotate(180 12 12)"
+              ></rect>
+              <rect x="3" y="6" width="21" height="2.4" rx="3" ry="3"></rect>
+              <rect x="3" y="12" width="21" height="2.4" rx="3" ry="3"></rect>
+              <rect x="3" y="18" width="21" height="2.4" rx="3" ry="3"></rect>
+            </g>
+          </svg>
+        </div>
+        <img
+          class="logo"
+          src="https://datadashboard.health.gov.il/COVID-19/assets/images/logo_DAshboard-01.png"
+        />
       </div>
-      <img
-        class="logo"
-        src="https://datadashboard.health.gov.il/COVID-19/assets/images/logo_DAshboard-01.png"
-      />
+
+      <div class="title-container">
+        <a href="#">נגיף הקורונה בישראל - תמונת מצב כללית</a>
+        <div class="subtitle">
+          <span> עדכון אחרון: </span>
+          <span *ngIf="latestUpdateTime">{{
+            latestUpdateTime | hebrewDateFormat
+          }}</span>
+        </div>
+      </div>
+
+      <div class="accesibleViewButton" (click)="accesibleViewClicked()">
+        <span>{{ getViewButtonText() }}</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="header-placeHolder"></div>
+
+  <div class="data-container">
+    <app-daily-statistics></app-daily-statistics>
+
+    <div class="spreadness-indices">
+      <div class="title">מדדי התפשטות בהסתכלות שבועית</div>
+      <div class="data-row second">
+        <div class="spreadness-chart">
+          <app-identified-change-trend-chart></app-identified-change-trend-chart>
+        </div>
+        <div class="spreadness-chart">
+          <app-serious-critical-sick-chart></app-serious-critical-sick-chart>
+        </div>
+        <div class="spreadness-chart">
+          <app-identified-outside-spreadness-chart></app-identified-outside-spreadness-chart>
+        </div>
+      </div>
     </div>
 
-    <div class="title-container">
-      <a href="#">נגיף הקורונה בישראל - תמונת מצב כללית</a>
-      <div class="subtitle">
-        <span> עדכון אחרון: </span>
-        <span *ngIf="latestUpdateTime">{{
-          latestUpdateTime | hebrewDateFormat
-        }}</span>
+    <div class="data-row third">
+      <div class="inRow-container right">
+        <app-epidemical-curve></app-epidemical-curve>
+      </div>
+      <div class="inRow-container left">
+        <app-respiratory-sick-serious></app-respiratory-sick-serious>
       </div>
     </div>
 
-    <div class="left-container"><span>לתצוגה נגישה</span></div>
+    <div class="data-row fourth">
+      <div class="inRow-container right">
+        <app-traffic-light-program></app-traffic-light-program>
+      </div>
+      <div class="inRow-container left">
+        <app-tests-chart></app-tests-chart>
+      </div>
+    </div>
   </div>
-</header>
 
-<div class="header-placeHolder"></div>
-
-<div class="data-container">
-  <app-daily-statistics></app-daily-statistics>
-
-  <div class="spreadness-indices">
-    <div class="title">מדדי התפשטות בהסתכלות שבועית</div>
-    <div class="data-row second">
-      <div class="spreadness-chart">
-        <app-identified-change-trend-chart></app-identified-change-trend-chart>
-      </div>
-      <div class="spreadness-chart">
-        <app-serious-critical-sick-chart></app-serious-critical-sick-chart>
-      </div>
-      <div class="spreadness-chart">
-        <app-identified-outside-spreadness-chart></app-identified-outside-spreadness-chart>
-      </div>
-    </div>
-  </div>
-
-  <div class="data-row third">
-    <div class="inRow-container right">
-      <app-epidemical-curve></app-epidemical-curve>
-    </div>
-    <div class="inRow-container left">
-      <app-respiratory-sick-serious></app-respiratory-sick-serious>
-    </div>
-  </div>
-
-  <div class="data-row fourth">
-    <div class="inRow-container right">
-      <app-traffic-light-program></app-traffic-light-program>
-    </div>
-    <div class="inRow-container left">
-      <app-tests-chart></app-tests-chart>
-    </div>
-  </div>
+  <app-http-error *ngIf="showError()"></app-http-error>
 </div>
-
-<app-http-error *ngIf="showError()"></app-http-error>

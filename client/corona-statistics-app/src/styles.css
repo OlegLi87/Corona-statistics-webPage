@@ -225,6 +225,74 @@ body::-webkit-scrollbar-thumb,
   background-color: #969696;
 }
 
+/* rules for accesible view */
+.accessibleView {
+  background-color: #496679;
+  color: #ffffff;
+}
+
+.accessibleView .accesibleViewButton {
+  background-color: #d8d8d8 !important;
+  color: #222b45 !important;
+}
+
+.accessibleView .spreadness-indices {
+  background-color: #384f5f !important;
+}
+
+.accessibleView .info-container,
+.accessibleView .infoRow {
+  background-color: #2a3b47 !important;
+}
+
+.accessibleView .lightBulb {
+  background-image: url("./assets/images/yellowLighbulb.png");
+}
+
+.accessibleView .dropDown,
+.accessibleView .dropDown-list {
+  background-color: #465b6d;
+  border: 2px solid #79858e;
+}
+
+.accessibleView .dropDown:hover {
+  background-color: #384f5f;
+}
+
+.accessibleView .dropDown-list li:hover {
+  background-color: rgba(163, 168, 173, 0.2) !important;
+}
+
+.accessibleView .inRow-container {
+  background-color: #465b6d !important;
+}
+
+.accessibleView .inRow-container .title,
+.accessibleView ::placeholder {
+  color: #ffffff !important;
+}
+
+.accessibleView input {
+  background-color: #465b6d !important;
+  color: #ffffff;
+}
+
+.accessibleView th {
+  background-color: #2a3b47 !important;
+}
+
+.accessibleView th.darker {
+  background-color: #354047 !important;
+}
+
+.accessibleView td.darker {
+  background-color: #314553 !important;
+}
+
+.accessibleView .gradeSquare {
+  color: #222b45;
+}
+
 @media (max-width: 25rem) {
   .inRow-container .header {
     padding: 1rem 0.8rem;

@@ -1,3 +1,4 @@
+import { GlobalVariableStorageService } from './../shared/services/globalVariablesStorage.service';
 import { DailyStatistics } from './../shared/models/statisticsDataModels/dailyStatistics.model';
 import {
   AfterViewInit,
@@ -34,6 +35,7 @@ export class DailyStatisticsComponent implements OnInit, AfterViewInit {
   activeInfoIcon: HTMLDivElement;
   identifiedOverall: number;
   deathsOverall: number;
+  isOnAccessibleView = false;
 
   @HostListener('document:click', ['$event'])
   onClick() {
@@ -52,7 +54,8 @@ export class DailyStatisticsComponent implements OnInit, AfterViewInit {
 
   constructor(
     private connectionService: ConnectionService,
-    private statisticsService: StatisticsService
+    private statisticsService: StatisticsService,
+    private globalVariableStorage: GlobalVariableStorageService
   ) {}
 
   ngOnInit(): void {
@@ -72,6 +75,10 @@ export class DailyStatisticsComponent implements OnInit, AfterViewInit {
     this.statisticsService.dailyStatisticsDataUpdated.subscribe(
       (data) => (this.dailyStatistics = data)
     );
+
+    this.globalVariableStorage.accesibleViewModeChanged.subscribe((value) => {
+      this.isOnAccessibleView = value;
+    });
 
     this.connectionService.fetchStatisticsData(this.connectionConfig);
   }

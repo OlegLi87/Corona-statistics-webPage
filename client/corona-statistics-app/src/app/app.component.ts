@@ -1,3 +1,4 @@
+import { GlobalVariableStorageService } from './shared/services/globalVariablesStorage.service';
 import { GlobalHttpInterceptorService } from './shared/services/globalHttpInterceptor.service';
 import { StatisticsService } from './shared/services/statistics.service';
 import { ConnectionService } from './shared/services/connection.service';
@@ -11,17 +12,21 @@ import { ConnectionConfig } from './shared/models/connectionConfig.model';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  [Symbol.toStringTag] = 'AppComponent'; // used for type verification within GlobalVariableStorage service.
+
   private connectionConfig: ConnectionConfig = {
     statisticsDataType: StatisticsDataType.LatestUpdateTime,
     projectionQuery: 'date=1',
     limit: 1,
   };
 
+  isOnAccessibleView = false;
   latestUpdateTime: Date;
 
   constructor(
     private connectionService: ConnectionService,
-    private statisticsService: StatisticsService
+    private statisticsService: StatisticsService,
+    private globalVariablesStorage: GlobalVariableStorageService
   ) {}
 
   ngOnInit(): void {
@@ -30,6 +35,18 @@ export class AppComponent implements OnInit {
     });
 
     this.connectionService.fetchStatisticsData(this.connectionConfig);
+
+    this.globalVariablesStorage.accesibleViewModeChanged.subscribe((value) => {
+      this.isOnAccessibleView = value;
+    });
+  }
+
+  accesibleViewClicked(): void {
+    this.globalVariablesStorage.toggleAccesibleViewMode(this);
+  }
+
+  getViewButtonText(): string {
+    return this.isOnAccessibleView ? 'לתצוגה רגילה' : 'לתצוגה נגישה';
   }
 
   showError(): boolean {
