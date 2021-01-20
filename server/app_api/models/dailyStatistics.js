@@ -21,5 +21,5 @@ const dailyStatisticsSchema = new mongoose.Schema({
   tests: Number,
 });
 
-const DailyStatisticsModel = mongoose.model('DailyStatistic', dailyStatisticsSchema, 'dailyStatisticss');
+const DailyStatisticsModel = mongoose.model('DailyStatistic', dailyStatisticsSchema, 'dailyStatistics');
 module.exports = DailyStatisticsModel;

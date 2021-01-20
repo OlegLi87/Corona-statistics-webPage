@@ -1,3 +1,4 @@
+import { GlobalHttpInterceptorService } from './shared/services/globalHttpInterceptor.service';
 import { StatisticsService } from './shared/services/statistics.service';
 import { ConnectionService } from './shared/services/connection.service';
 import { Component, OnInit } from '@angular/core';
@@ -29,5 +30,9 @@ export class AppComponent implements OnInit {
     });
 
     this.connectionService.fetchStatisticsData(this.connectionConfig);
+  }
+
+  showError(): boolean {
+    return GlobalHttpInterceptorService.errorCounter > 6;
   }
 }

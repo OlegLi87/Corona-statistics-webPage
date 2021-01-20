@@ -1,20 +1,23 @@
-import { error } from 'protractor';
+import { environment } from './../../../environments/environment';
 import { CityBasedStatData } from './../../fourthRowComponents/traffic-light-program/traffic-light-program.component';
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { StatisticsService } from './statistics.service';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ConnectionConfig } from '../models/connectionConfig.model';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { errorHandler } from '../utils';
 
 @Injectable({ providedIn: 'root' })
 export class ConnectionService {
+  private apiURL: string;
+
   constructor(
     private http: HttpClient,
-    private statisticsService: StatisticsService,
-    @Inject('API_CONNECTION_STRING') private connectionString: string
-  ) {}
+    private statisticsService: StatisticsService
+  ) {
+    this.apiURL = environment.apiURL;
+  }
 
   fetchStatisticsData(connectConfig: ConnectionConfig): void {
     const connectionString = this.buildConnectionString(
@@ -50,7 +53,7 @@ export class ConnectionService {
 
   fetchCityBasedStatisticsData(): Observable<Array<CityBasedStatData>> {
     return this.http.get<Array<CityBasedStatData>>(
-      this.connectionString + '/' + 'cityBasedStatistics'
+      this.apiURL + '/' + 'cityBasedStatistics'
     );
   }
 
@@ -58,14 +61,14 @@ export class ConnectionService {
     projectionQuery: string,
     limit: number
   ): string {
-    return `${this.connectionString}/dailyStatistics?${projectionQuery}&limit=${limit}`;
+    return `${this.apiURL}/dailyStatistics?${projectionQuery}&limit=${limit}`;
   }
 
   private buildConnectionStringForFieldSum(
     fieldName: string,
     limit: number
   ): string {
-    let connectionString = `${this.connectionString}/dailyStatistics/fieldSum?field=${fieldName}`;
+    let connectionString = `${this.apiURL}/dailyStatistics/fieldSum?field=${fieldName}`;
     return !limit ? connectionString : connectionString + `&limit=${limit}`;
   }
 

@@ -1,7 +1,8 @@
+import { GlobalHttpInterceptorService } from './shared/services/globalHttpInterceptor.service';
 import { PipesModule } from './shared/pipes/pipes.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { DailyStatisticsComponent } from './daily-statistics/daily-statistics.component';
@@ -13,6 +14,7 @@ import { EpidemicalCurveComponent } from './thirdRowComponents/epidemical-curve/
 import { RespiratorySickSeriousComponent } from './thirdRowComponents/respiratory-sick-serious/respiratory-sick-serious.component';
 import { TrafficLightProgramComponent } from './fourthRowComponents/traffic-light-program/traffic-light-program.component';
 import { TestsChartComponent } from './fourthRowComponents/tests-chart/tests-chart.component';
+import { HttpErrorComponent } from './http-error/http-error.component';
 
 @NgModule({
   declarations: [
@@ -26,12 +28,14 @@ import { TestsChartComponent } from './fourthRowComponents/tests-chart/tests-cha
     RespiratorySickSeriousComponent,
     TrafficLightProgramComponent,
     TestsChartComponent,
+    HttpErrorComponent,
   ],
   imports: [BrowserModule, HttpClientModule, PipesModule],
   providers: [
     {
-      provide: 'API_CONNECTION_STRING',
-      useValue: 'http://localhost:8080',
+      provide: HTTP_INTERCEPTORS,
+      useClass: GlobalHttpInterceptorService,
+      multi: true,
     },
   ],
   bootstrap: [AppComponent],
