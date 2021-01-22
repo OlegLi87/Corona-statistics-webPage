@@ -10,8 +10,17 @@ export function getEpidemicCurveChartConfigObjFactory(
   chartConfigObj: ChartConfigObjData
 ): any {
   let counter = 0;
+
+  const isDark = chartConfigObj.isOnAccessibleViewMode;
+
+  const chartColors = {
+    background: isDark ? '#384f5f' : '#ffff',
+    textColor: isDark ? '#e4e8e9' : '#66666',
+  };
+
   return {
     chart: {
+      backgroundColor: chartColors.background,
       style: {
         fontFamily: 'OpenSansHebrewLight',
         fontWeight: 900,
@@ -36,11 +45,9 @@ export function getEpidemicCurveChartConfigObjFactory(
         width: 1.5,
         color: '#d0d1d6',
         zIndex: 10,
-        label: {
-          ...crosshairLblConfigObj,
-          backgroundColor: '#1c7d7e',
-          formatter(val) {
-            return chartConfigObj.xAxisCategories[val];
+        labels: {
+          style: {
+            color: chartColors.textColor,
           },
         },
       },
@@ -48,16 +55,24 @@ export function getEpidemicCurveChartConfigObjFactory(
         text: chartConfigObj.xAxisTitle ?? '',
         style: {
           fontSize: '0.88rem',
+          color: chartColors.textColor,
+        },
+      },
+      labels: {
+        style: {
+          color: chartColors.textColor,
         },
       },
       tickInterval: getXAxisLabelsStep(chartConfigObj.xAxisCategories),
     },
     yAxis: [
       {
+        gridLineWidth: Number(!chartConfigObj.isOnAccessibleViewMode) * 1.5,
         title: {
           text: 'מספר מקרים מצטבר',
           style: {
             fontSize: '0.85rem',
+            color: chartColors.textColor,
           },
         },
         tickInterval: 35000,
@@ -89,6 +104,7 @@ export function getEpidemicCurveChartConfigObjFactory(
           rotation: 270,
           style: {
             fontSize: '0.85rem',
+            color: chartColors.textColor,
           },
         },
         gridLineWidth: 0,

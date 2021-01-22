@@ -149,35 +149,4 @@ export class TrafficLightProgramComponent implements OnInit {
 
     this.sortTable(this.headerColumns.find((h) => h.sortingField === 'grade'));
   }
-
-  // private createDummyData(): void {
-  //   for (let i = 0; i < 100; i++) {
-  //     const city = this.getRandomWord(this.getRandomNumber(4, 11));
-  //     const grade = this.getRandomNumber(3, 10);
-  //     const newSick = this.getRandomNumber(10, 350);
-  //     const positiveTests = this.getRandomNumber(8, 60);
-  //     const identifiedChange = this.getRandomNumber(5, 70);
-  //     const activeSick = this.getRandomNumber(50, 2500);
-  //     this.statData.push({
-  //       city,
-  //       grade,
-  //       newSick,
-  //       positiveTests,
-  //       identifiedChange,
-  //       activeSick,
-  //     });
-  //   }
-  // }
-
-  // private getRandomNumber(from: number, to: number): number {
-  //   return from + Math.floor(Math.random() * (to + 1 - from));
-  // }
-
-  // private getRandomWord(numOfLetters): string {
-  //   const arr = [];
-  //   for (let i = 0; i < numOfLetters; i++) {
-  //     arr.push(this.getRandomNumber(1488, 1514));
-  //   }
-  //   return String.fromCharCode(...arr);
-  // }
 }

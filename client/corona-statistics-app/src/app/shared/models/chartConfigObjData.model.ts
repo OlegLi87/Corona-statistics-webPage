@@ -4,4 +4,5 @@ export interface ChartConfigObjData {
   xAxisCategories: Array<string>;
   yAxisTitle: string;
   yAxisData: Array<Array<number>>;
+  isOnAccessibleViewMode: boolean;
 }

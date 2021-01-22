@@ -5,17 +5,21 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class GlobalVariableStorageService {
-  private isOnAccesibleViewMode = false;
-
+  private isOnAccessibleViewMode = false;
   accesibleViewModeChanged = new Subject<boolean>();
 
+  // can only be invoked from AppComponent object
   toggleAccesibleViewMode(caller: object): void {
     if ({}.toString.call(caller).indexOf('AppComponent') === -1) {
       const msg =
         'acessible view mode can only be changed from within AppComponent';
       throw new TypeError(msg);
     }
-    this.isOnAccesibleViewMode = !this.isOnAccesibleViewMode;
-    this.accesibleViewModeChanged.next(this.isOnAccesibleViewMode);
+    this.isOnAccessibleViewMode = !this.isOnAccessibleViewMode;
+    this.accesibleViewModeChanged.next(this.isOnAccessibleViewMode);
+  }
+
+  getIsOnAccessibleViewMode(): boolean {
+    return this.isOnAccessibleViewMode;
   }
 }

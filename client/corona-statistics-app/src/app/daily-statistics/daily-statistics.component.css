@@ -214,6 +214,14 @@
   color: white;
 }
 
+.accessibleView .bars-icon {
+  background-color: #2c3a46 !important;
+}
+
+.accessibleView .active-icon {
+  background-color: #c0b3a8 !important;
+}
+
 @media (max-width: 87.5rem) {
   .container {
     flex-wrap: wrap;

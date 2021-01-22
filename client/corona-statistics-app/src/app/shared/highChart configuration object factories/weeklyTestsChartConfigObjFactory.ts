@@ -6,9 +6,18 @@ declare const Highcharts: any;
 export function getWeeklyTestsChartConfigObjFactory(
   chartConfigObj: ChartConfigObjData
 ): any {
+  const isDark = chartConfigObj.isOnAccessibleViewMode;
+
+  const chartColors = {
+    background: isDark ? '#384f5f' : '#ffff',
+    textColor: isDark ? '#e4e8e9' : '#66666',
+    dataLabelColor: isDark ? '#e4e8e9' : 'rgba(120,124,138,1)',
+  };
+
   return {
     chart: {
       type: 'column',
+      backgroundColor: chartColors.background,
       style: {
         fontFamily: 'OpenSansHebrewLight',
         fontWeight: 900,
@@ -24,6 +33,14 @@ export function getWeeklyTestsChartConfigObjFactory(
     xAxis: {
       title: {
         text: chartConfigObj.xAxisTitle ?? '',
+        style: {
+          color: chartColors.textColor,
+        },
+      },
+      labels: {
+        style: {
+          color: chartColors.textColor,
+        },
       },
       categories: chartConfigObj.xAxisCategories,
       lineWidth: 0,
@@ -34,12 +51,16 @@ export function getWeeklyTestsChartConfigObjFactory(
         text: chartConfigObj.yAxisTitle ?? '',
         style: {
           fontSize: '0.7rem',
+          color: chartColors.textColor,
         },
       },
       gridLineWidth: 0,
       labels: {
         formatter(arg) {
           return getCommaFormatedString(arg.pos);
+        },
+        style: {
+          color: chartColors.textColor,
         },
       },
       tickInterval: 10000,
@@ -58,7 +79,7 @@ export function getWeeklyTestsChartConfigObjFactory(
         color: '#50cbfd',
         dataLabels: {
           enabled: true,
-          color: 'rgba(120,124,138,1)',
+          color: chartColors.dataLabelColor,
           y: -10,
           formatter() {
             return getCommaFormatedString(this.y);

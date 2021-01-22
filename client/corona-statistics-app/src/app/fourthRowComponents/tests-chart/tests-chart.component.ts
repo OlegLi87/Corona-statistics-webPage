@@ -7,6 +7,7 @@ import { ConnectionConfig } from 'src/app/shared/models/connectionConfig.model';
 import { StatisticsDataType } from 'src/app/shared/models/statisticsDataType';
 import { getFormattedDateString } from 'src/app/shared/utils';
 import { getWeeklyTestsChartConfigObjFactory } from 'src/app/shared/highChart configuration object factories/weeklyTestsChartConfigObjFactory';
+import { GlobalVariableStorageService } from 'src/app/shared/services/globalVariablesStorage.service';
 
 declare const Highcharts: any;
 
@@ -20,7 +21,9 @@ export class TestsChartComponent implements OnInit {
   lastWeekTest: number;
   weeklyIdentified: string;
 
-  private statistics: Array<WeeklyTests>;
+  private statData: Array<WeeklyTests>;
+  private chartConfigDataObj: ChartConfigObjData;
+
   private connectionConfig: ConnectionConfig = {
     statisticsDataType: StatisticsDataType.WeeklyTests,
     projectionQuery: 'date=1&identified=1&tests=1',
@@ -29,15 +32,26 @@ export class TestsChartComponent implements OnInit {
 
   constructor(
     private connectionService: ConnectionService,
-    private statisticsService: StatisticsService
+    private statisticsService: StatisticsService,
+    private globalVariableStorageService: GlobalVariableStorageService
   ) {}
 
   ngOnInit(): void {
     this.fetchInfoRowData();
     this.statisticsService.weeklyTestsDataUpdated.subscribe((data) => {
-      this.statistics = data;
+      this.statData = data;
       this.drawChart();
     });
+
+    this.globalVariableStorageService.accesibleViewModeChanged.subscribe(
+      (value) => {
+        if (this.chartConfigDataObj)
+          this.chartConfigDataObj.isOnAccessibleViewMode = value;
+
+        this.drawChart();
+      }
+    );
+
     this.connectionService.fetchStatisticsData(this.connectionConfig);
   }
 
@@ -56,10 +70,12 @@ export class TestsChartComponent implements OnInit {
   }
 
   private drawChart(): void {
-    const chartData = this.createChartDataObj();
+    const chartConfigData =
+      this.chartConfigDataObj ?? this.createChartDataObj();
+
     Highcharts.chart(
       this.chartContainerId,
-      getWeeklyTestsChartConfigObjFactory(chartData)
+      getWeeklyTestsChartConfigObjFactory(chartConfigData)
     );
   }
 
@@ -70,18 +86,21 @@ export class TestsChartComponent implements OnInit {
     const xAxisCategories = new Array<string>();
     const yAxisData = [new Array<number>(), new Array<number>()];
 
-    for (let i = this.statistics.length - 1; i > -1; i--) {
-      xAxisCategories.push(getFormattedDateString(this.statistics[i].date));
-      yAxisData[0].push(this.statistics[i].tests);
-      yAxisData[1].push(this.statistics[i].identified);
+    for (let i = this.statData.length - 1; i > -1; i--) {
+      xAxisCategories.push(getFormattedDateString(this.statData[i].date));
+      yAxisData[0].push(this.statData[i].tests);
+      yAxisData[1].push(this.statData[i].identified);
     }
 
-    return {
+    this.chartConfigDataObj = {
       xAxisTitle,
       yAxisTitle,
       xAxisCategories,
       yAxisData,
       tooltipTitle,
+      isOnAccessibleViewMode: this.globalVariableStorageService.getIsOnAccessibleViewMode(),
     };
+
+    return this.chartConfigDataObj;
   }
 }

@@ -5,6 +5,7 @@ import { ConnectionConfig } from 'src/app/shared/models/connectionConfig.model';
 import { SickSerious } from 'src/app/shared/models/statisticsDataModels/sickSerious.model';
 import { StatisticsDataType } from 'src/app/shared/models/statisticsDataType';
 import { ConnectionService } from 'src/app/shared/services/connection.service';
+import { GlobalVariableStorageService } from 'src/app/shared/services/globalVariablesStorage.service';
 import { StatisticsService } from 'src/app/shared/services/statistics.service';
 
 declare const Highcharts: any;
@@ -21,29 +22,47 @@ export class SeriousCriticalSickChartComponent implements OnInit {
     limit: 7,
   };
 
+  private statData: Array<SickSerious>;
+  private chartConfigDataObj: ChartConfigObjData;
+
   chartContainerId = 'seriousCriticalSickChart';
 
   constructor(
     private statisticsService: StatisticsService,
-    private connectionService: ConnectionService
+    private connectionService: ConnectionService,
+    private globalVariableStorageService: GlobalVariableStorageService
   ) {}
 
   ngOnInit(): void {
     this.statisticsService.sickSeriousDataUpdated.subscribe((data) => {
-      this.drawChart(data);
+      this.statData = data;
+      this.drawChart();
     });
+
+    this.globalVariableStorageService.accesibleViewModeChanged.subscribe(
+      (value) => {
+        if (this.chartConfigDataObj)
+          this.chartConfigDataObj.isOnAccessibleViewMode = value;
+
+        this.drawChart();
+      }
+    );
+
     this.connectionService.fetchStatisticsData(this.connectionConfig);
   }
 
-  private drawChart(data: Array<SickSerious>): void {
-    const chartData = this.createChartDataObject(data);
+  private drawChart(): void {
+    const chartConfigData =
+      this.chartConfigDataObj ?? this.createChartDataObject();
+
     Highcharts.chart(
       this.chartContainerId,
-      getSickSeriousChartConfigObjFactory(chartData)
+      getSickSeriousChartConfigObjFactory(chartConfigData)
     );
   }
 
-  private createChartDataObject(data: Array<SickSerious>): ChartConfigObjData {
+  private createChartDataObject(): ChartConfigObjData {
+    const data = this.statData;
     const xAxisTitle = null;
     const yAxisTitle = null;
     const tooltipTitle = null;
@@ -58,12 +77,15 @@ export class SeriousCriticalSickChartComponent implements OnInit {
       yAxisData[0].push(data[i].sickSerious);
     }
 
-    return {
+    this.chartConfigDataObj = {
       xAxisTitle,
       yAxisTitle,
       tooltipTitle,
       xAxisCategories,
       yAxisData,
+      isOnAccessibleViewMode: this.globalVariableStorageService.getIsOnAccessibleViewMode(),
     };
+
+    return this.chartConfigDataObj;
   }
 }

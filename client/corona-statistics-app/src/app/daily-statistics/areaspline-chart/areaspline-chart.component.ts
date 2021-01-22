@@ -1,3 +1,4 @@
+import { GlobalVariableStorageService } from './../../shared/services/globalVariablesStorage.service';
 import { DailyChangeTrendData } from './../../shared/models/statisticsDataModels/dailyChangeTrendData.model';
 import { StatisticsService } from './../../shared/services/statistics.service';
 import { ConnectionService } from './../../shared/services/connection.service';
@@ -18,20 +19,23 @@ export class AreasplineChartComponent implements OnInit {
   @Input() statisticsDataType: StatisticsDataType;
   chartContainerID = 'daily-change-trend-arespline-chart';
   title: string;
+
   private connectionConfig: ConnectionConfig;
-  private dailyChangeTrendData: Array<DailyChangeTrendData>;
+  private statData: Array<DailyChangeTrendData>;
 
   constructor(
     private connectionService: ConnectionService,
-    private statisticsService: StatisticsService
+    private statisticsService: StatisticsService,
+    private globalVariableStorageService: GlobalVariableStorageService
   ) {}
 
   ngOnInit(): void {
     this.initializeComponentState();
     this.statisticsService.dailyChangeTrendDataUpdated.subscribe((data) => {
-      this.dailyChangeTrendData = data;
+      this.statData = data;
       this.drawChart();
     });
+
     this.connectionService.fetchStatisticsData(this.connectionConfig);
   }
 
@@ -67,10 +71,11 @@ export class AreasplineChartComponent implements OnInit {
   }
 
   private drawChart(): void {
-    let chartData = this.createChartDataObject();
+    let chartConfigData = this.createChartDataObject();
+
     Highcharts.chart(
       this.chartContainerID,
-      getDailyStatChartConfigObj(chartData)
+      getDailyStatChartConfigObj(chartConfigData)
     );
   }
 
@@ -83,8 +88,8 @@ export class AreasplineChartComponent implements OnInit {
     const xAxisCategories = new Array<string>();
 
     // reversing elements order since API sends data in descending date based order.
-    for (let i = this.dailyChangeTrendData.length - 1; i > -1; i--) {
-      const data = this.dailyChangeTrendData[i];
+    for (let i = this.statData.length - 1; i > -1; i--) {
+      const data = this.statData[i];
       xAxisCategories.push(
         data.date.getDate() + '.' + (data.date.getMonth() + 1)
       );
@@ -115,6 +120,7 @@ export class AreasplineChartComponent implements OnInit {
       xAxisCategories,
       yAxisTitle,
       yAxisData,
+      isOnAccessibleViewMode: this.globalVariableStorageService.getIsOnAccessibleViewMode(),
     };
   }
 }

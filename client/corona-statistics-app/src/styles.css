@@ -27,6 +27,8 @@ body {
   background-color: #edf1f7;
   margin: 0;
   color: #222b45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: antialiased;
 }
 
 span {
@@ -240,6 +242,10 @@ body::-webkit-scrollbar-thumb,
   background-color: #384f5f !important;
 }
 
+.accessibleView .toggle-chart span {
+  color: #fff;
+}
+
 .accessibleView .info-container,
 .accessibleView .infoRow {
   background-color: #2a3b47 !important;
@@ -259,12 +265,13 @@ body::-webkit-scrollbar-thumb,
   background-color: #384f5f;
 }
 
-.accessibleView .dropDown-list li:hover {
+.accessibleView .dropDown-list li:hover,
+.accessibleView .citiesList li:hover {
   background-color: rgba(163, 168, 173, 0.2) !important;
 }
 
 .accessibleView .inRow-container {
-  background-color: #465b6d !important;
+  background-color: #384f5f !important;
 }
 
 .accessibleView .inRow-container .title,
@@ -272,8 +279,9 @@ body::-webkit-scrollbar-thumb,
   color: #ffffff !important;
 }
 
-.accessibleView input {
-  background-color: #465b6d !important;
+.accessibleView input,
+.accessibleView .citiesList li {
+  background-color: #384f5f !important;
   color: #ffffff;
 }
 
@@ -291,6 +299,14 @@ body::-webkit-scrollbar-thumb,
 
 .accessibleView .gradeSquare {
   color: #222b45;
+}
+
+.accessibleView .chart {
+  background-color: #384f5f !important;
+}
+
+.accessibleView .info-icon {
+  background-color: #c0b3a8 !important;
 }
 
 @media (max-width: 25rem) {

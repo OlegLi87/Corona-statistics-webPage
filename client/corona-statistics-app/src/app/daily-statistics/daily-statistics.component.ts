@@ -169,11 +169,13 @@ export class DailyStatisticsComponent implements OnInit, AfterViewInit {
       const lines = [line1, line2, line3];
 
       draw.on('toggleWhiteBarsOn', () => {
-        lines.forEach((l) => l.stroke({ color: 'white' }));
+        const lineColor = this.isOnAccessibleView ? '#596074' : '#fff';
+        lines.forEach((l) => l.stroke({ color: lineColor }));
       });
 
       draw.on('toggleWhiteBarsOff', () => {
-        lines.forEach((l) => l.stroke({ color: '#596074' }));
+        const lineColor = this.isOnAccessibleView ? '#fff' : '#596074';
+        lines.forEach((l) => l.stroke({ color: lineColor }));
       });
     });
   }

@@ -9,8 +9,16 @@ import {
 export function getRespiratorySickChartConfigObjFactory(
   chartConfigObj: ChartConfigObjData
 ): any {
+  const isDark = chartConfigObj.isOnAccessibleViewMode;
+
+  const chartColors = {
+    background: isDark ? '#384f5f' : '#ffff',
+    textColor: isDark ? '#e4e8e9' : '#66666',
+  };
+
   return {
     chart: {
+      backgroundColor: chartColors.background,
       style: {
         fontFamily: 'OpenSansHebrewLight',
         fontWeight: 900,
@@ -28,6 +36,7 @@ export function getRespiratorySickChartConfigObjFactory(
         text: chartConfigObj.xAxisTitle ?? '',
         style: {
           fontSize: '0.9rem',
+          color: chartColors.textColor,
         },
       },
       categories: chartConfigObj.xAxisCategories,
@@ -44,13 +53,21 @@ export function getRespiratorySickChartConfigObjFactory(
           },
         },
       },
+      labels: {
+        style: {
+          color: chartColors.textColor,
+        },
+      },
       tickInterval: getXAxisLabelsStep(chartConfigObj.xAxisCategories),
     },
     yAxis: {
       title: {
         text: chartConfigObj.yAxisTitle ?? '',
+        style: {
+          color: chartColors.textColor,
+        },
       },
-      gridLineWidth: 1.5,
+      gridLineWidth: Number(!chartConfigObj.isOnAccessibleViewMode) * 1.5,
       crosshair: {
         width: 1.2,
         color: '#d0d1d6',
@@ -60,6 +77,11 @@ export function getRespiratorySickChartConfigObjFactory(
         label: {
           ...crosshairLblConfigObj,
           formatter: getCommaFormatedString,
+        },
+      },
+      labels: {
+        style: {
+          color: chartColors.textColor,
         },
       },
     },

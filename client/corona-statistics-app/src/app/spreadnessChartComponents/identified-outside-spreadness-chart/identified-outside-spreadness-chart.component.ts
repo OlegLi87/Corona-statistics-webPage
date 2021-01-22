@@ -6,6 +6,7 @@ import { StatisticsDataType } from 'src/app/shared/models/statisticsDataType';
 import { ConnectionService } from 'src/app/shared/services/connection.service';
 import { StatisticsService } from 'src/app/shared/services/statistics.service';
 import { getIdentifiedOutsideSpreadChartConfigObjFactory } from 'src/app/shared/highChart configuration object factories/identifiedOutsideSpreadChartConfigObjFactory';
+import { GlobalVariableStorageService } from 'src/app/shared/services/globalVariablesStorage.service';
 
 declare const Highcharts: any;
 
@@ -21,33 +22,49 @@ export class IdentifiedOutsideSpreadnessChartComponent implements OnInit {
     limit: 7,
   };
 
+  private statData: Array<IdentifiedOutsideSpreadness>;
+  private chartConfigDataObj: ChartConfigObjData;
+
   chartContainerId = 'outsideSpreadnessChart';
 
   constructor(
     private statisticsService: StatisticsService,
-    private connectionService: ConnectionService
+    private connectionService: ConnectionService,
+    private globalVariableStorageService: GlobalVariableStorageService
   ) {}
 
   ngOnInit(): void {
     this.statisticsService.identifiedOutsideSpreadnessDataUpdated.subscribe(
       (data) => {
-        this.drawChart(data);
+        this.statData = data;
+        this.drawChart();
       }
     );
+
+    this.globalVariableStorageService.accesibleViewModeChanged.subscribe(
+      (value) => {
+        if (this.chartConfigDataObj)
+          this.chartConfigDataObj.isOnAccessibleViewMode = value;
+
+        this.drawChart();
+      }
+    );
+
     this.connectionService.fetchStatisticsData(this.connectionConfig);
   }
 
-  private drawChart(data: Array<IdentifiedOutsideSpreadness>): void {
-    const chartData = this.createChartDataObject(data);
+  private drawChart(): void {
+    const chartConfigData =
+      this.chartConfigDataObj ?? this.createChartDataObject();
+
     Highcharts.chart(
       this.chartContainerId,
-      getIdentifiedOutsideSpreadChartConfigObjFactory(chartData)
+      getIdentifiedOutsideSpreadChartConfigObjFactory(chartConfigData)
     );
   }
 
-  private createChartDataObject(
-    data: Array<IdentifiedOutsideSpreadness>
-  ): ChartConfigObjData {
+  private createChartDataObject(): ChartConfigObjData {
+    const data = this.statData;
     const xAxisTitle = null;
     const yAxisTitle = null;
     const tooltipTitle = null;
@@ -61,12 +78,15 @@ export class IdentifiedOutsideSpreadnessChartComponent implements OnInit {
       );
       yAxisData[0].push(data[i].identifiedOutsideSpreadness);
     }
-    return {
+    this.chartConfigDataObj = {
       xAxisTitle,
       xAxisCategories,
       yAxisData,
       yAxisTitle,
       tooltipTitle,
+      isOnAccessibleViewMode: this.globalVariableStorageService.getIsOnAccessibleViewMode(),
     };
+
+    return this.chartConfigDataObj;
   }
 }

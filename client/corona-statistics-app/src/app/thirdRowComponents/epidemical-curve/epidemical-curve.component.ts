@@ -12,6 +12,7 @@ import { ConnectionConfig } from 'src/app/shared/models/connectionConfig.model';
 import { StatisticsDataType } from 'src/app/shared/models/statisticsDataType';
 import { EpidemicCurve } from 'src/app/shared/models/statisticsDataModels/epidemicCurve.model';
 import { getEpidemicCurveChartConfigObjFactory } from 'src/app/shared/highChart configuration object factories/epidemicCurveChartConfigObjFactory';
+import { GlobalVariableStorageService } from 'src/app/shared/services/globalVariablesStorage.service';
 
 declare const Highcharts: any;
 
@@ -25,7 +26,8 @@ export class EpidemicalCurveComponent implements OnInit, AfterViewInit {
   dropDownListItems: Array<DropDownListItem>;
   showDropDownList = false;
   chartContainerId = 'epidemicCurve';
-  private epidemicCurveData: Array<EpidemicCurve>;
+  private statData: Array<EpidemicCurve>;
+  private chartConfigDataObj: ChartConfigObjData;
 
   private connectionConfig: ConnectionConfig = {
     statisticsDataType: StatisticsDataType.EpidemicCurve,
@@ -40,14 +42,25 @@ export class EpidemicalCurveComponent implements OnInit, AfterViewInit {
 
   constructor(
     private connectionService: ConnectionService,
-    private statisticsService: StatisticsService
+    private statisticsService: StatisticsService,
+    private globalVariableStorageService: GlobalVariableStorageService
   ) {}
 
   ngOnInit(): void {
     this.statisticsService.epidemicCurveDataUpdated.subscribe((data) => {
-      this.epidemicCurveData = data;
-      this.drawChart();
+      this.statData = data;
+      this.drawChart(false);
     });
+
+    this.globalVariableStorageService.accesibleViewModeChanged.subscribe(
+      (value) => {
+        if (this.chartConfigDataObj)
+          this.chartConfigDataObj.isOnAccessibleViewMode = value;
+
+        this.drawChart(true);
+      }
+    );
+
     this.dropDownListItems = getDropDownListItems();
     this.changeSelectedItem('שבועיים אחרונים');
   }
@@ -81,17 +94,20 @@ export class EpidemicalCurveComponent implements OnInit, AfterViewInit {
     if (limit > savedData.length || (!limit && savedData.length < 32)) {
       this.connectionService.fetchStatisticsData(this.connectionConfig);
     } else {
-      if (!limit) this.epidemicCurveData = savedData;
-      else this.epidemicCurveData = savedData.slice(0, limit);
-      this.drawChart();
+      if (!limit) this.statData = savedData;
+      else this.statData = savedData.slice(0, limit);
+      this.drawChart(false);
     }
   }
 
-  private drawChart(): void {
-    const chartData = this.createChartDataObject();
+  private drawChart(isAfterThemeChanged: boolean): void {
+    const chartConfigData =
+      (isAfterThemeChanged && this.chartConfigDataObj) ||
+      this.createChartDataObject();
+
     Highcharts.chart(
       this.chartContainerId,
-      getEpidemicCurveChartConfigObjFactory(chartData)
+      getEpidemicCurveChartConfigObjFactory(chartConfigData)
     );
   }
 
@@ -104,21 +120,22 @@ export class EpidemicalCurveComponent implements OnInit, AfterViewInit {
 
     for (let i = 0; i < 3; i++) yAxisData.push([]);
 
-    for (let i = this.epidemicCurveData.length - 1; i > -1; i--) {
-      xAxisCategories.push(
-        getFormattedDateString(this.epidemicCurveData[i].date)
-      );
-      yAxisData[0].push(this.epidemicCurveData[i]['identifiedOverall']);
-      yAxisData[1].push(this.epidemicCurveData[i]['recovered']);
-      yAxisData[2].push(this.epidemicCurveData[i]['identified']);
+    for (let i = this.statData.length - 1; i > -1; i--) {
+      xAxisCategories.push(getFormattedDateString(this.statData[i].date));
+      yAxisData[0].push(this.statData[i]['identifiedOverall']);
+      yAxisData[1].push(this.statData[i]['recovered']);
+      yAxisData[2].push(this.statData[i]['identified']);
     }
 
-    return {
+    this.chartConfigDataObj = {
       xAxisTitle,
       yAxisTitle,
       tooltipTitle,
       xAxisCategories,
       yAxisData,
+      isOnAccessibleViewMode: this.globalVariableStorageService.getIsOnAccessibleViewMode(),
     };
+
+    return this.chartConfigDataObj;
   }
 }

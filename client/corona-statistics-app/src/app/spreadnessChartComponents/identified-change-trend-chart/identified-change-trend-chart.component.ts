@@ -1,3 +1,4 @@
+import { GlobalVariableStorageService } from './../../shared/services/globalVariablesStorage.service';
 import { ChartConfigObjData } from 'src/app/shared/models/chartConfigObjData.model';
 import { IdentifiedChangeTrend } from './../../shared/models/statisticsDataModels/identifiedChangeTrend.model';
 import { StatisticsService } from './../../shared/services/statistics.service';
@@ -20,35 +21,49 @@ export class IdentifiedChangeTrendChartComponent implements OnInit {
     projectionQuery: 'date=1&identified=1&sickActive=1',
     limit: 7,
   };
+  private statData: Array<IdentifiedChangeTrend>;
+  private chartConfigDataObj: ChartConfigObjData;
 
   chartContainerId = 'identifiedSpreadnessChart';
 
   constructor(
     private statisticsService: StatisticsService,
-    private connectionService: ConnectionService
+    private connectionService: ConnectionService,
+    private globalVariableStorageService: GlobalVariableStorageService
   ) {}
 
   ngOnInit(): void {
     this.statisticsService.identifiedChangeTrendDataUpdated.subscribe(
       (data) => {
-        this.drawChart(data);
+        this.statData = data;
+        this.drawChart();
       }
     );
+
+    this.globalVariableStorageService.accesibleViewModeChanged.subscribe(
+      (value) => {
+        if (this.chartConfigDataObj)
+          this.chartConfigDataObj.isOnAccessibleViewMode = value;
+
+        this.drawChart();
+      }
+    );
+
     this.connectionService.fetchStatisticsData(this.connectionConfig);
   }
 
-  private drawChart(data: Array<IdentifiedChangeTrend>): void {
-    const chartData = this.createChartDataObject(data);
+  private drawChart(): void {
+    const chartConfigData =
+      this.chartConfigDataObj ?? this.createChartDataObject();
 
     Highcharts.chart(
       this.chartContainerId,
-      getChangeTrendChartConfigObjFactory(chartData)
+      getChangeTrendChartConfigObjFactory(chartConfigData)
     );
   }
 
-  private createChartDataObject(
-    data: Array<IdentifiedChangeTrend>
-  ): ChartConfigObjData {
+  private createChartDataObject(): ChartConfigObjData {
+    const data = this.statData;
     const xAxisTitle = null;
     const yAxisTitle = 'אחוז שינוי יומי';
     const tooltipTitle = null;
@@ -67,13 +82,16 @@ export class IdentifiedChangeTrendChartComponent implements OnInit {
       yAxisData[1].push(this.getIdentifiedAverageChange());
     }
 
-    return {
+    this.chartConfigDataObj = {
       xAxisTitle,
       xAxisCategories,
       yAxisTitle,
       yAxisData,
       tooltipTitle,
+      isOnAccessibleViewMode: this.globalVariableStorageService.getIsOnAccessibleViewMode(),
     };
+
+    return this.chartConfigDataObj;
   }
 
   private getSickDoubled(sickActive: number, identified: number): number {

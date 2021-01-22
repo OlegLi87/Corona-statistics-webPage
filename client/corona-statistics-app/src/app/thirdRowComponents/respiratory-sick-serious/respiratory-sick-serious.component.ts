@@ -13,6 +13,7 @@ import { ConnectionConfig } from 'src/app/shared/models/connectionConfig.model';
 import { StatisticsDataType } from 'src/app/shared/models/statisticsDataType';
 import { RespiratoryAndSickSerious } from 'src/app/shared/models/statisticsDataModels/respiratoryAndSickSerious.model';
 import { getRespiratorySickChartConfigObjFactory } from 'src/app/shared/highChart configuration object factories/respiratorySickChartConfigObjFactory';
+import { GlobalVariableStorageService } from 'src/app/shared/services/globalVariablesStorage.service';
 
 declare const Highcharts: any;
 
@@ -34,7 +35,8 @@ export class RespiratorySickSeriousComponent implements OnInit, AfterViewInit {
     projectionQuery: 'date=1&respiratory=1&sickSerious=1',
     limit: 31,
   };
-  private chartStatData: Array<RespiratoryAndSickSerious>;
+  private statData: Array<RespiratoryAndSickSerious>;
+  private chartConfigDataObj: ChartConfigObjData;
 
   @HostListener('document:click', ['$event'])
   onClick() {
@@ -43,7 +45,8 @@ export class RespiratorySickSeriousComponent implements OnInit, AfterViewInit {
 
   constructor(
     private statisticsService: StatisticsService,
-    private connectionService: ConnectionService
+    private connectionService: ConnectionService,
+    private globalVariableStorageService: GlobalVariableStorageService
   ) {}
 
   ngOnInit(): void {
@@ -65,8 +68,17 @@ export class RespiratorySickSeriousComponent implements OnInit, AfterViewInit {
 
     this.statisticsService.respiratoryAndSickSeriousDataUpdated.subscribe(
       (data) => {
-        this.chartStatData = data;
-        this.drawChart();
+        this.statData = data;
+        this.drawChart(false);
+      }
+    );
+
+    this.globalVariableStorageService.accesibleViewModeChanged.subscribe(
+      (value) => {
+        if (this.chartConfigDataObj)
+          this.chartConfigDataObj.isOnAccessibleViewMode = value;
+
+        this.drawChart(true);
       }
     );
 
@@ -109,17 +121,20 @@ export class RespiratorySickSeriousComponent implements OnInit, AfterViewInit {
     ) {
       this.connectionService.fetchStatisticsData(this.connectionConfig);
     } else {
-      if (!limit) this.chartStatData = savedChartStatData;
-      else this.chartStatData = savedChartStatData.slice(0, limit);
-      this.drawChart();
+      if (!limit) this.statData = savedChartStatData;
+      else this.statData = savedChartStatData.slice(0, limit);
+      this.drawChart(false);
     }
   }
 
-  private drawChart(): void {
-    const chartData = this.createChartDataObject();
+  private drawChart(isAfterThemeChanged: boolean): void {
+    const chartConfigData =
+      (isAfterThemeChanged && this.chartConfigDataObj) ||
+      this.createChartDataObject();
+
     Highcharts.chart(
       this.chartContainerId,
-      getRespiratorySickChartConfigObjFactory(chartData)
+      getRespiratorySickChartConfigObjFactory(chartConfigData)
     );
   }
 
@@ -131,18 +146,21 @@ export class RespiratorySickSeriousComponent implements OnInit, AfterViewInit {
     const yAxisData = new Array<Array<number>>();
     for (let i = 0; i++ < 2; ) yAxisData.push(new Array<number>());
 
-    for (let i = this.chartStatData.length - 1; i > -1; i--) {
-      xAxisCategories.push(getFormattedDateString(this.chartStatData[i].date));
-      yAxisData[0].push(this.chartStatData[i].sickSerious);
-      yAxisData[1].push(this.chartStatData[i].respiratory);
+    for (let i = this.statData.length - 1; i > -1; i--) {
+      xAxisCategories.push(getFormattedDateString(this.statData[i].date));
+      yAxisData[0].push(this.statData[i].sickSerious);
+      yAxisData[1].push(this.statData[i].respiratory);
     }
 
-    return {
+    this.chartConfigDataObj = {
       xAxisTitle,
       xAxisCategories,
       yAxisTitle,
       yAxisData,
       tooltipTitle,
+      isOnAccessibleViewMode: this.globalVariableStorageService.getIsOnAccessibleViewMode(),
     };
+
+    return this.chartConfigDataObj;
   }
 }
